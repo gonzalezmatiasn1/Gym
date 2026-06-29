@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rutina Gym — Matias</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d0f14; --surface: #141720; --surface2: #1c2030; --border: #252a3a;
+    --accent: #4f9cf9; --green: #22c55e; --orange: #f97316; --red: #ef4444;
+    --purple: #7c3aed; --text: #e8eaf0; --muted: #6b7280;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; padding: 0 0 90px; }
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg,#0d0f14,#141b2d); border-bottom: 1px solid var(--border); padding: 20px 16px 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; }
+  .header h1 { font-size:21px; font-weight:700; letter-spacing:-0.5px; }
+  .header h1 span { color: var(--accent); }
+  .header p { font-size:11px; color:var(--muted); margin-top:2px; }
+  .knee-badge { background:rgba(239,68,68,.12); border:1px solid rgba(239,68,68,.3); color:#fca5a5; font-size:10px; font-weight:600; padding:4px 9px; border-radius:20px; white-space:nowrap; }
+
+  /* NAV TABS */
+  .nav-tabs { display:flex; gap:6px; }
+  .nav-tab { flex:1; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:9px 6px; cursor:pointer; transition:all .2s; text-align:center; }
+  .nav-tab:hover { border-color:var(--accent); }
+  .nav-tab.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .nav-tab .tl { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+  .nav-tab .tn { font-size:10px; opacity:.75; margin-top:1px; }
+  .nav-tab.active .tn { opacity:.9; }
+  .nav-tab.stats-tab .tl { font-size:11px; }
+
+  /* MAIN */
+  .main { padding:16px; max-width:480px; margin:0 auto; }
+  .screen { display:none; }
+  .screen.active { display:block; }
+
+  /* CARDS */
+  .day-header { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px; margin-bottom:14px; }
+  .day-header h2 { font-size:17px; font-weight:700; margin-bottom:3px; }
+  .day-header p { font-size:12px; color:var(--muted); line-height:1.5; }
+  .day-focus { display:flex; gap:5px; flex-wrap:wrap; margin-top:10px; }
+  .focus-tag { font-size:10px; font-weight:600; padding:3px 9px; border-radius:20px; }
+  .focus-tag.pierna { background:rgba(124,58,237,.2); color:#c4b5fd; border:1px solid rgba(124,58,237,.3); }
+  .focus-tag.upper  { background:rgba(14,165,233,.15); color:#7dd3fc; border:1px solid rgba(14,165,233,.25); }
+  .focus-tag.core   { background:rgba(245,158,11,.15); color:#fcd34d; border:1px solid rgba(245,158,11,.25); }
+
+  .section-label { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin:18px 0 8px; padding-left:2px; }
+
+  /* EXERCISE CARD */
+  .exercise-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; margin-bottom:10px; overflow:hidden; transition:border-color .2s,opacity .2s; }
+  .exercise-card.done { opacity:.5; border-color:var(--green); }
+  .exercise-card.done .ex-header { background:rgba(34,197,94,.06); }
+  .ex-header { display:flex; align-items:center; gap:10px; padding:13px; cursor:pointer; }
+  .ex-number { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); min-width:20px; }
+  .ex-info { flex:1; min-width:0; }
+  .ex-name { font-size:14px; font-weight:600; line-height:1.2; }
+  .ex-sets { font-size:11px; color:var(--muted); margin-top:3px; font-family:'DM Mono',monospace; }
+  .ex-sets b { color:var(--accent); font-weight:500; }
+  .ex-tags { display:flex; gap:4px; margin-top:5px; flex-wrap:wrap; }
+  .ex-tag { font-size:10px; font-weight:600; padding:2px 6px; border-radius:4px; }
+  .ex-tag.pierna { background:rgba(124,58,237,.2); color:#c4b5fd; }
+  .ex-tag.upper  { background:rgba(14,165,233,.15); color:#7dd3fc; }
+  .ex-tag.core   { background:rgba(245,158,11,.15); color:#fcd34d; }
+  .ex-tag.caution { background:rgba(239,68,68,.15); color:#fca5a5; }
+  .ex-actions { display:flex; gap:6px; align-items:center; }
+  .btn-done { width:30px; height:30px; border-radius:8px; border:1.5px solid var(--border); background:transparent; color:var(--muted); font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; flex-shrink:0; }
+  .btn-done:hover { border-color:var(--green); color:var(--green); }
+  .exercise-card.done .btn-done { background:var(--green); border-color:var(--green); color:#fff; }
+  .btn-expand { width:26px; height:26px; border-radius:6px; border:none; background:var(--surface2); color:var(--muted); cursor:pointer; font-size:12px; display:flex; align-items:center; justify-content:center; transition:transform .2s; }
+  .btn-expand.open { transform:rotate(180deg); }
+
+  /* DETAIL */
+  .ex-detail { display:none; padding:0 13px 13px; border-top:1px solid var(--border); }
+  .ex-detail.open { display:block; }
+  .detail-tip { background:var(--surface2); border-radius:10px; padding:10px 12px; font-size:12px; color:#c9cdd8; line-height:1.6; margin-top:12px; margin-bottom:8px; }
+  .detail-tip strong { color:var(--accent); }
+  .knee-note { background:rgba(239,68,68,.08); border:1px solid rgba(239,68,68,.2); border-radius:8px; padding:8px 12px; font-size:11px; color:#fca5a5; line-height:1.5; }
+  .knee-note::before { content:"🦵 "; }
+
+  /* WEIGHT LOG */
+  .weight-log { background:var(--surface2); border-radius:10px; padding:10px 12px; margin-top:8px; }
+  .weight-log-title { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+  .weight-input-row { display:flex; gap:6px; align-items:center; }
+  .weight-input { flex:1; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text); font-size:13px; font-family:'DM Mono',monospace; outline:none; }
+  .weight-input:focus { border-color:var(--accent); }
+  .weight-unit { font-size:12px; color:var(--muted); white-space:nowrap; }
+  .btn-save-weight { background:var(--accent); color:#fff; border:none; border-radius:8px; padding:7px 12px; font-size:12px; font-weight:600; cursor:pointer; white-space:nowrap; }
+  .btn-save-weight:hover { opacity:.9; }
+  .weight-history { margin-top:8px; }
+  .weight-history-item { display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-bottom:1px solid var(--border); }
+  .weight-history-item:last-child { border-bottom:none; }
+  .wh-date { font-size:10px; color:var(--muted); font-family:'DM Mono',monospace; }
+  .wh-val { font-size:12px; font-weight:600; font-family:'DM Mono',monospace; }
+  .wh-diff { font-size:10px; font-family:'DM Mono',monospace; }
+  .wh-diff.up { color:var(--green); }
+  .wh-diff.down { color:var(--red); }
+  .wh-diff.eq { color:var(--muted); }
+
+  /* TIMER */
+  .rest-timer { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:13px; margin-bottom:14px; display:flex; align-items:center; gap:10px; }
+  .timer-display { font-family:'DM Mono',monospace; font-size:26px; font-weight:500; color:var(--accent); min-width:58px; }
+  .timer-display.warning { color:var(--orange); }
+  .timer-display.done-t { color:var(--green); }
+  .timer-info { flex:1; }
+  .timer-info b { font-size:13px; display:block; margin-bottom:1px; }
+  .timer-info p { font-size:11px; color:var(--muted); }
+  .timer-btns { display:flex; gap:5px; }
+  .timer-btn { padding:7px 10px; border-radius:8px; border:1px solid var(--border); background:var(--surface); color:var(--text); font-size:12px; font-weight:600; cursor:pointer; }
+  .timer-btn.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+
+  /* PROGRESS */
+  .progress-bar { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:13px; margin-bottom:14px; }
+  .progress-bar-header { display:flex; justify-content:space-between; margin-bottom:7px; font-size:12px; }
+  .progress-bar-header span { color:var(--muted); }
+  .progress-bar-header b { color:var(--green); font-family:'DM Mono',monospace; }
+  .bar-track { height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
+  .bar-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--green)); border-radius:3px; transition:width .4s ease; }
+
+  .note { background:rgba(79,156,249,.07); border:1px solid rgba(79,156,249,.2); border-radius:10px; padding:11px; font-size:12px; color:#93c5fd; line-height:1.6; margin-bottom:10px; }
+  .note strong { color:var(--accent); }
+
+  /* ===== STATS SCREEN ===== */
+  .stats-hero { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:14px; }
+  .stats-hero h2 { font-size:16px; font-weight:700; margin-bottom:12px; }
+  .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .stat-box { background:var(--surface2); border-radius:12px; padding:14px; }
+  .stat-box .sb-val { font-size:28px; font-weight:700; font-family:'DM Mono',monospace; color:var(--accent); line-height:1; }
+  .stat-box .sb-label { font-size:11px; color:var(--muted); margin-top:4px; }
+  .stat-box .sb-sub { font-size:10px; color:var(--green); margin-top:2px; }
+  .stat-box.goal .sb-val { color:var(--green); }
+
+  .week-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-top:10px; }
+  .week-cell { aspect-ratio:1; border-radius:6px; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--muted); font-weight:600; }
+  .week-cell.trained { background:var(--accent); color:#fff; }
+  .week-cell.today { border:2px solid var(--orange); }
+  .week-labels { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:4px; }
+  .week-labels span { text-align:center; font-size:9px; color:var(--muted); font-weight:600; }
+
+  .sessions-section { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px; margin-bottom:14px; }
+  .sessions-section h3 { font-size:13px; font-weight:700; margin-bottom:12px; }
+  .session-item { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border); }
+  .session-item:last-child { border-bottom:none; }
+  .si-left .si-day { font-size:13px; font-weight:600; }
+  .si-left .si-date { font-size:11px; color:var(--muted); margin-top:1px; }
+  .si-right { text-align:right; }
+  .si-right .si-exs { font-size:11px; color:var(--muted); }
+  .si-badge { display:inline-block; background:rgba(34,197,94,.15); color:var(--green); font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-top:2px; }
+
+  .weights-section { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px; margin-bottom:14px; }
+  .weights-section h3 { font-size:13px; font-weight:700; margin-bottom:12px; }
+  .ex-weight-summary { padding:8px 0; border-bottom:1px solid var(--border); }
+  .ex-weight-summary:last-child { border-bottom:none; }
+  .ews-name { font-size:12px; font-weight:600; margin-bottom:6px; }
+  .ews-bars { display:flex; gap:3px; align-items:flex-end; height:36px; }
+  .ews-bar { flex:1; background:rgba(79,156,249,.25); border-radius:3px 3px 0 0; min-height:4px; position:relative; }
+  .ews-bar.latest { background:var(--accent); }
+  .ews-bar-val { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); text-align:center; margin-top:2px; }
+  .ews-meta { display:flex; justify-content:space-between; margin-top:6px; }
+  .ews-meta span { font-size:10px; color:var(--muted); }
+  .ews-meta b { color:var(--green); }
+
+  .btn-mark-session { width:100%; background:var(--green); color:#fff; border:none; border-radius:12px; padding:14px; font-size:15px; font-weight:700; cursor:pointer; margin-bottom:14px; }
+  .btn-mark-session:hover { opacity:.9; }
+  .btn-clear { background:transparent; border:1px solid var(--border); color:var(--muted); border-radius:8px; padding:5px 10px; font-size:11px; cursor:pointer; }
+
+  .empty-state { text-align:center; padding:24px; color:var(--muted); font-size:13px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>Rutina <span>Gym</span></h1>
+      <p>Mar · Jue · Vie — 60–75 min</p>
+    </div>
+    <span class="knee-badge">⚡ LCA + LCM</span>
+  </div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="switchScreen('day',0)">
+      <div class="tl">MAR</div><div class="tn">Día 1</div>
+    </div>
+    <div class="nav-tab" onclick="switchScreen('day',1)">
+      <div class="tl">JUE</div><div class="tn">Día 2</div>
+    </div>
+    <div class="nav-tab" onclick="switchScreen('day',2)">
+      <div class="tl">VIE</div><div class="tn">Día 3</div>
+    </div>
+    <div class="nav-tab stats-tab" onclick="switchScreen('stats',-1)">
+      <div class="tl">📊</div><div class="tn">Stats</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- TIMER (shared) -->
+  <div class="rest-timer" id="timerWidget">
+    <div class="timer-display" id="timerDisplay">1:30</div>
+    <div class="timer-info">
+      <b>Descanso entre series</b>
+      <p>Presioná START después de cada serie</p>
+    </div>
+    <div class="timer-btns">
+      <button class="timer-btn primary" id="timerBtn" onclick="toggleTimer()">START</button>
+      <button class="timer-btn" onclick="resetTimer()">↺</button>
+    </div>
+  </div>
+
+  <!-- PROGRESS (shared) -->
+  <div class="progress-bar" id="progressWidget">
+    <div class="progress-bar-header">
+      <span>Progreso del día</span>
+      <b id="progressText">0 / 0</b>
+    </div>
+    <div class="bar-track"><div class="bar-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+
+  <!-- ==================== DÍA 1: MARTES ==================== -->
+  <div class="screen active" id="screen-day-0">
+    <div class="day-header">
+      <h2>Martes — Piernas + Empuje</h2>
+      <p>Cuádríceps, glúteos y cadena empuje (pecho/hombros/tríceps).</p>
+      <div class="day-focus">
+        <span class="focus-tag pierna">Piernas</span>
+        <span class="focus-tag upper">Empuje</span>
+        <span class="focus-tag core">Core</span>
+      </div>
+    </div>
+    <div class="note"><strong>Calentamiento (8 min):</strong> 5 min bici estática baja intensidad → movilidad cadera/rodilla → sentadilla sin peso ×10 lenta.</div>
+
+    <div class="section-label">Tren Inferior</div>
+
+    <div class="exercise-card" id="d0-e0">
+      <div class="ex-header" onclick="toggleDetail('d0-e0')">
+        <span class="ex-number">01</span>
+        <div class="ex-info">
+          <div class="ex-name">Sentadilla Máquina Smith</div>
+          <div class="ex-sets"><b>4×10–12</b> · Descanso 90s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag pierna">Glúteos</span><span class="ex-tag caution">Rango controlado</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d0-e0')">✓</button>
+          <button class="btn-expand" id="btn-d0-e0">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d0-e0">
+        <div class="detail-tip">Pies ligeramente adelantados. <strong>Bajá solo a 90°</strong> o donde no haya dolor. Empuje desde el talón.</div>
+        <div class="knee-note">No pases las rodillas de la punta de los pies. La Smith te da estabilidad extra que protege el LCA.</div>
+        <div class="weight-log" id="wl-d0-e0"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d0-e1">
+      <div class="ex-header" onclick="toggleDetail('d0-e1')">
+        <span class="ex-number">02</span>
+        <div class="ex-info">
+          <div class="ex-name">Prensa de Piernas 45°</div>
+          <div class="ex-sets"><b>4×12</b> · Descanso 90s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag pierna">Glúteos</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d0-e1')">✓</button>
+          <button class="btn-expand" id="btn-d0-e1">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d0-e1">
+        <div class="detail-tip">Pies a la altura de los hombros. <strong>No bloquees la rodilla arriba.</strong> Bajada en 3 seg.</div>
+        <div class="knee-note">El peso va sobre la máquina, no sobre tu rodilla. Rango al punto sin tensión.</div>
+        <div class="weight-log" id="wl-d0-e1"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d0-e2">
+      <div class="ex-header" onclick="toggleDetail('d0-e2')">
+        <span class="ex-number">03</span>
+        <div class="ex-info">
+          <div class="ex-name">Step-Up en Cajón (mancuernas)</div>
+          <div class="ex-sets"><b>3×10 c/pierna</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag pierna">Glúteos</span><span class="ex-tag caution">Unilateral</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d0-e2')">✓</button>
+          <button class="btn-expand" id="btn-d0-e2">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d0-e2">
+        <div class="detail-tip">Subí con el pie completo apoyado en el cajón. <strong>Empujá desde el talón hacia arriba.</strong> Controlá la bajada en 2–3 seg. Sin rebote abajo.</div>
+        <div class="knee-note">Empezá sin peso o muy poco hasta que la rodilla tolere bien. Detecta asimetrías entre piernas. Clave post-LCA.</div>
+        <div class="weight-log" id="wl-d0-e2"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d0-e3">
+      <div class="ex-header" onclick="toggleDetail('d0-e3')">
+        <span class="ex-number">04</span>
+        <div class="ex-info">
+          <div class="ex-name">Curl Femoral Acostado (máquina)</div>
+          <div class="ex-sets"><b>3×12</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Isquiotibiales</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d0-e3')">✓</button>
+          <button class="btn-expand" id="btn-d0-e3">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d0-e3">
+        <div class="detail-tip"><strong>Contraé al máximo en la subida</strong>, bajá en 3 seg. Sin rebote.</div>
+        <div class="knee-note">Isquiotibiales fuertes = soporte principal del LCA. Prioridad alta.</div>
+        <div class="weight-log" id="wl-d0-e3"></div>
+      </div>
+    </div>
+
+    <div class="section-label">Tren Superior — Empuje</div>
+
+    <div class="exercise-card" id="d0-e4">
+      <div class="ex-header" onclick="toggleDetail('d0-e4')">
+        <span class="ex-number">05</span>
+        <div class="ex-info">
+          <div class="ex-name">Press de Banca (máquina o mancuernas)</div>
+          <div class="ex-sets"><b>4×10–12</b> · Descanso 90s</div>
+          <div class="ex-tags"><span class="ex-tag upper">Pecho</span><span class="ex-tag upper">Tríceps</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d0-e4')">✓</button>
+          <button class="btn-expand" id="btn-d0-e4">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d0-e4">
+        <div class="detail-tip">Escápulas juntas y abajo. <strong>Bajada controlada 3 seg.</strong> Si el gym está lleno, mancuernas en cualquier banco.</div>
+        <div class="weight-log" id="wl-d0-e4"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d0-e5">
+      <div class="ex-header" onclick="toggleDetail('d0-e5')">
+        <span class="ex-number">06</span>
+        <div class="ex-info">
+          <div class="ex-name">Press Militar (mancuernas o máquina)</div>
+          <div class="ex-sets"><b>3×10–12</b> · Descanso 90s</div>
+          <div class="ex-tags"><span class="ex-tag upper">Hombros</span><span class="ex-tag upper">Tríceps</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d0-e5')">✓</button>
+          <button class="btn-expand" id="btn-d0-e5">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d0-e5">
+        <div class="detail-tip">Sentado, core activado. Empujá hacia arriba sin arquear la lumbar.</div>
+        <div class="weight-log" id="wl-d0-e5"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d0-e6">
+      <div class="ex-header" onclick="toggleDetail('d0-e6')">
+        <span class="ex-number">07</span>
+        <div class="ex-info">
+          <div class="ex-name">Tríceps en Polea (cuerda)</div>
+          <div class="ex-sets"><b>3×12–15</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag upper">Tríceps</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d0-e6')">✓</button>
+          <button class="btn-expand" id="btn-d0-e6">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d0-e6">
+        <div class="detail-tip">Codos pegados al cuerpo, empujá hacia abajo. <strong>Abrí las manos hacia afuera en la extensión total.</strong></div>
+        <div class="weight-log" id="wl-d0-e6"></div>
+      </div>
+    </div>
+
+    <div class="section-label">Core</div>
+
+    <div class="exercise-card" id="d0-e7">
+      <div class="ex-header" onclick="toggleDetail('d0-e7')">
+        <span class="ex-number">08</span>
+        <div class="ex-info">
+          <div class="ex-name">Plancha Frontal</div>
+          <div class="ex-sets"><b>3×45–60 seg</b> · Descanso 45s</div>
+          <div class="ex-tags"><span class="ex-tag core">Core</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d0-e7')">✓</button>
+          <button class="btn-expand" id="btn-d0-e7">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d0-e7">
+        <div class="detail-tip">Cuerpo en línea recta, ombligo adentro, glúteos apretados.</div>
+        <div class="knee-note">Core fuerte = menos carga compensatoria en rodilla durante el fútbol.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== DÍA 2: JUEVES ==================== -->
+  <div class="screen" id="screen-day-1">
+    <div class="day-header">
+      <h2>Jueves — Piernas + Tracción</h2>
+      <p>Glúteos, isquios y abductores. Espalda y bíceps en tren superior.</p>
+      <div class="day-focus">
+        <span class="focus-tag pierna">Piernas Post.</span>
+        <span class="focus-tag upper">Tracción</span>
+        <span class="focus-tag core">Core</span>
+      </div>
+    </div>
+    <div class="note"><strong>Calentamiento (8 min):</strong> 5 min bici → movilidad cadera → puente glúteo sin peso ×15.</div>
+
+    <div class="section-label">Tren Inferior — Cadena Posterior</div>
+
+    <div class="exercise-card" id="d1-e0">
+      <div class="ex-header" onclick="toggleDetail('d1-e0')">
+        <span class="ex-number">01</span>
+        <div class="ex-info">
+          <div class="ex-name">Hip Thrust con Barra</div>
+          <div class="ex-sets"><b>4×12–15</b> · Descanso 90s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Glúteos</span><span class="ex-tag pierna">Isquios</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d1-e0')">✓</button>
+          <button class="btn-expand" id="btn-d1-e0">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d1-e0">
+        <div class="detail-tip">Espalda alta en banco, barra con foam en caderas. <strong>Apretá el glúteo 1 seg arriba.</strong> Rodillas a 90° en la cima.</div>
+        <div class="knee-note">Sin stress sobre la rodilla. Glúteos fuertes = estabilidad en giros y frenadas de fútbol.</div>
+        <div class="weight-log" id="wl-d1-e0"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d1-e1">
+      <div class="ex-header" onclick="toggleDetail('d1-e1')">
+        <span class="ex-number">02</span>
+        <div class="ex-info">
+          <div class="ex-name">Curl Femoral Sentado (máquina)</div>
+          <div class="ex-sets"><b>4×12</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Isquiotibiales</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d1-e1')">✓</button>
+          <button class="btn-expand" id="btn-d1-e1">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d1-e1">
+        <div class="detail-tip">Variante sentada: isquio en elongación. <strong>Pausa en contracción máxima.</strong> Bajada 3 seg.</div>
+        <div class="knee-note">Combinás acostado (Martes) + sentado (Jueves) → ataca el isquio en dos ángulos distintos.</div>
+        <div class="weight-log" id="wl-d1-e1"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d1-e2">
+      <div class="ex-header" onclick="toggleDetail('d1-e2')">
+        <span class="ex-number">03</span>
+        <div class="ex-info">
+          <div class="ex-name">Step-Up en Cajón (mancuernas)</div>
+          <div class="ex-sets"><b>3×10 c/pierna</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag pierna">Glúteos</span><span class="ex-tag caution">Unilateral</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d1-e2')">✓</button>
+          <button class="btn-expand" id="btn-d1-e2">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d1-e2">
+        <div class="detail-tip">Segundo paso por semana. <strong>Aumentá el peso progresivamente</strong> respecto al martes si tolerás bien.</div>
+        <div class="knee-note">Seguís trabajando la asimetría entre piernas. Siempre empezar por la pierna operada.</div>
+        <div class="weight-log" id="wl-d1-e2"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d1-e3">
+      <div class="ex-header" onclick="toggleDetail('d1-e3')">
+        <span class="ex-number">04</span>
+        <div class="ex-info">
+          <div class="ex-name">Abductor en Máquina</div>
+          <div class="ex-sets"><b>3×15</b> · Descanso 45s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Abductores</span><span class="ex-tag caution">Estabilizador</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d1-e3')">✓</button>
+          <button class="btn-expand" id="btn-d1-e3">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d1-e3">
+        <div class="detail-tip">Empuje hacia afuera lento. <strong>Vuelta al centro en 3 seg.</strong> Sin rebote.</div>
+        <div class="knee-note">Abductores débiles = rodilla inestable. Muy común post-LCA.</div>
+        <div class="weight-log" id="wl-d1-e3"></div>
+      </div>
+    </div>
+
+    <div class="section-label">Tren Superior — Tracción</div>
+
+    <div class="exercise-card" id="d1-e4">
+      <div class="ex-header" onclick="toggleDetail('d1-e4')">
+        <span class="ex-number">05</span>
+        <div class="ex-info">
+          <div class="ex-name">Jalón al Pecho (polea alta)</div>
+          <div class="ex-sets"><b>4×10–12</b> · Descanso 90s</div>
+          <div class="ex-tags"><span class="ex-tag upper">Espalda</span><span class="ex-tag upper">Bíceps</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d1-e4')">✓</button>
+          <button class="btn-expand" id="btn-d1-e4">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d1-e4">
+        <div class="detail-tip">Agarre prono, ancho de hombros. Codos hacia abajo y atrás. <strong>Contraé la espalda al bajar la barra.</strong></div>
+        <div class="weight-log" id="wl-d1-e4"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d1-e5">
+      <div class="ex-header" onclick="toggleDetail('d1-e5')">
+        <span class="ex-number">06</span>
+        <div class="ex-info">
+          <div class="ex-name">Remo en Máquina</div>
+          <div class="ex-sets"><b>3×12</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag upper">Espalda</span><span class="ex-tag upper">Bíceps</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d1-e5')">✓</button>
+          <button class="btn-expand" id="btn-d1-e5">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d1-e5">
+        <div class="detail-tip">Pecho apoyado en el pad. <strong>Tirá los codos hacia atrás</strong>, escápulas juntas al final. Tronco quieto, sin balanceo.</div>
+        <div class="weight-log" id="wl-d1-e5"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d1-e6">
+      <div class="ex-header" onclick="toggleDetail('d1-e6')">
+        <span class="ex-number">07</span>
+        <div class="ex-info">
+          <div class="ex-name">Curl de Bíceps con Mancuernas</div>
+          <div class="ex-sets"><b>3×12</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag upper">Bíceps</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d1-e6')">✓</button>
+          <button class="btn-expand" id="btn-d1-e6">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d1-e6">
+        <div class="detail-tip">Codos pegados al cuerpo. <strong>Supina la muñeca en la subida.</strong> Bajada controlada 3 seg.</div>
+        <div class="weight-log" id="wl-d1-e6"></div>
+      </div>
+    </div>
+
+    <div class="section-label">Core</div>
+
+    <div class="exercise-card" id="d1-e7">
+      <div class="ex-header" onclick="toggleDetail('d1-e7')">
+        <span class="ex-number">08</span>
+        <div class="ex-info">
+          <div class="ex-name">Crunch en Polea + Plancha Lateral</div>
+          <div class="ex-sets"><b>3×(12 reps + 30 seg c/lado)</b> · Sin descanso entre ej.</div>
+          <div class="ex-tags"><span class="ex-tag core">Core</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d1-e7')">✓</button>
+          <button class="btn-expand" id="btn-d1-e7">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d1-e7">
+        <div class="detail-tip">Crunch arrodillado en polea → inmediatamente plancha lateral derecha → plancha lateral izquierda → descanso 45s → repetir.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== DÍA 3: VIERNES ==================== -->
+  <div class="screen" id="screen-day-2">
+    <div class="day-header">
+      <h2>Viernes — Full Body + Fuerza</h2>
+      <p>Más carga en prensa e hip thrust. Drop set en extensora. Hombros y espalda en upper.</p>
+      <div class="day-focus">
+        <span class="focus-tag pierna">Fuerza</span>
+        <span class="focus-tag upper">Hombros</span>
+        <span class="focus-tag core">Funcional</span>
+      </div>
+    </div>
+    <div class="note"><strong>Calentamiento (8 min):</strong> 5 min remo ergómetro o elíptica → activación glúteos con banda ×15 → sentadilla Smith sin peso ×10.</div>
+
+    <div class="section-label">Fuerza Base</div>
+
+    <div class="exercise-card" id="d2-e0">
+      <div class="ex-header" onclick="toggleDetail('d2-e0')">
+        <span class="ex-number">01</span>
+        <div class="ex-info">
+          <div class="ex-name">Prensa de Piernas — Series Pesadas</div>
+          <div class="ex-sets"><b>5×8</b> · Descanso 2 min</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag pierna">Glúteos</span><span class="ex-tag caution">Más carga</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d2-e0')">✓</button>
+          <button class="btn-expand" id="btn-d2-e0">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d2-e0">
+        <div class="detail-tip">Día de fuerza: más peso que martes/jueves, menos reps. <strong>5×8 al límite técnico.</strong></div>
+        <div class="knee-note">La prensa es el ejercicio más seguro para cargar pesado con rodilla operada.</div>
+        <div class="weight-log" id="wl-d2-e0"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d2-e1">
+      <div class="ex-header" onclick="toggleDetail('d2-e1')">
+        <span class="ex-number">02</span>
+        <div class="ex-info">
+          <div class="ex-name">Hip Thrust con Barra — Series Pesadas</div>
+          <div class="ex-sets"><b>4×10</b> · Descanso 90s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Glúteos</span><span class="ex-tag pierna">Isquios</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d2-e1')">✓</button>
+          <button class="btn-expand" id="btn-d2-e1">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d2-e1">
+        <div class="detail-tip">Progresá en carga respecto al jueves. <strong>Pausa 2 seg arriba.</strong></div>
+        <div class="weight-log" id="wl-d2-e1"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d2-e2">
+      <div class="ex-header" onclick="toggleDetail('d2-e2')">
+        <span class="ex-number">03</span>
+        <div class="ex-info">
+          <div class="ex-name">Extensión Cuádriceps — Drop Set al Fallo</div>
+          <div class="ex-sets"><b>3 drop sets</b> · Descanso 90s entre drop sets</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag caution">Al fallo</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d2-e2')">✓</button>
+          <button class="btn-expand" id="btn-d2-e2">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d2-e2">
+        <div class="detail-tip"><strong>Cómo ejecutar el drop set:</strong> Arrancás con el peso que uses normalmente → hacés al fallo → bajás 20–25% el peso sin descanso → al fallo de nuevo → bajás otro 20–25% → al fallo. Eso es 1 drop set. Hacés 3 con 90s de descanso entre cada uno. <strong>Todo en la misma máquina sin moverse.</strong></div>
+        <div class="knee-note">Al fallo = fallo muscular (no podés hacer una rep más con buena técnica), no dolor articular. Si duele la rodilla, parás.</div>
+        <div class="weight-log" id="wl-d2-e2"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d2-e3">
+      <div class="ex-header" onclick="toggleDetail('d2-e3')">
+        <span class="ex-number">04</span>
+        <div class="ex-info">
+          <div class="ex-name">Sentadilla Búlgara (mancuernas)</div>
+          <div class="ex-sets"><b>3×10 c/pierna</b> · Descanso 90s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag pierna">Glúteos</span><span class="ex-tag caution">Unilateral</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d2-e3')">✓</button>
+          <button class="btn-expand" id="btn-d2-e3">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d2-e3">
+        <div class="detail-tip">Pie trasero en banco. Bajá hasta muslo paralelo al suelo. <strong>Rodilla delantera no pasa la punta del pie.</strong></div>
+        <div class="knee-note">Empezá con poco peso. Es el ejercicio más exigente del viernes para la rodilla.</div>
+        <div class="weight-log" id="wl-d2-e3"></div>
+      </div>
+    </div>
+
+    <div class="section-label">Tren Superior</div>
+
+    <div class="exercise-card" id="d2-e4">
+      <div class="ex-header" onclick="toggleDetail('d2-e4')">
+        <span class="ex-number">05</span>
+        <div class="ex-info">
+          <div class="ex-name">Elevaciones Laterales (mancuernas)</div>
+          <div class="ex-sets"><b>4×15</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag upper">Hombros</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d2-e4')">✓</button>
+          <button class="btn-expand" id="btn-d2-e4">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d2-e4">
+        <div class="detail-tip">Codos levemente flexionados. Subí hasta altura del hombro. <strong>Bajá muy lento (4 seg).</strong></div>
+        <div class="weight-log" id="wl-d2-e4"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d2-e5">
+      <div class="ex-header" onclick="toggleDetail('d2-e5')">
+        <span class="ex-number">06</span>
+        <div class="ex-info">
+          <div class="ex-name">Remo en Máquina</div>
+          <div class="ex-sets"><b>3×12</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag upper">Espalda</span><span class="ex-tag upper">Bíceps</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d2-e5')">✓</button>
+          <button class="btn-expand" id="btn-d2-e5">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d2-e5">
+        <div class="detail-tip">Pecho apoyado en el pad. <strong>Escápulas juntas al final.</strong> Tronco quieto.</div>
+        <div class="weight-log" id="wl-d2-e5"></div>
+      </div>
+    </div>
+
+    <div class="exercise-card" id="d2-e6">
+      <div class="ex-header" onclick="toggleDetail('d2-e6')">
+        <span class="ex-number">07</span>
+        <div class="ex-info">
+          <div class="ex-name">Tríceps en Polea (cuerda)</div>
+          <div class="ex-sets"><b>3×15</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag upper">Tríceps</span></div>
+        </div>
+        <div class="ex-actions">
+          <button class="btn-done" onclick="toggleDone(event,'d2-e6')">✓</button>
+          <button class="btn-expand" id="btn-d2-e6">▾</button>
+        </div>
+      </div>
+      <div class="ex-detail" id="det-d2-e6">
+        <div class="detail-tip">Codos pegados. Abrí la cuerda hacia afuera en la extensión total.</div>
+        <div class="weight-log" id="wl-d2-e6"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== STATS ==================== -->
+  <div class="screen" id="screen-stats">
+    <div class="stats-hero">
+      <h2>Esta semana</h2>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="sb-val" id="stat-sessions">0</div>
+          <div class="sb-label">Sesiones completadas</div>
+          <div class="sb-sub" id="stat-sessions-sub">Meta: 3 por semana</div>
+        </div>
+        <div class="stat-box goal">
+          <div class="sb-val" id="stat-streak">0</div>
+          <div class="sb-label">Semanas consecutivas</div>
+          <div class="sb-sub" id="stat-streak-sub">racha activa</div>
+        </div>
+        <div class="stat-box">
+          <div class="sb-val" id="stat-total">0</div>
+          <div class="sb-label">Total de sesiones</div>
+          <div class="sb-sub">desde el inicio</div>
+        </div>
+        <div class="stat-box">
+          <div class="sb-val" id="stat-goal-pct">0%</div>
+          <div class="sb-label">Objetivo semanal</div>
+          <div class="sb-sub" id="stat-goal-sub">sesiones / semana</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-mark-session" id="btnMarkSession" onclick="markSessionToday()">✓ Marcar sesión de hoy</button>
+
+    <div class="weights-section">
+      <h3>Progresión de pesos</h3>
+      <div id="weightsProgressContainer"></div>
+    </div>
+
+    <div class="sessions-section">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h3 style="margin-bottom:0">Historial de sesiones</h3>
+        <button class="btn-clear" onclick="clearSessions()">Limpiar</button>
+      </div>
+      <div id="sessionHistory"></div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+// ============ DATA LAYER ============
+const STORAGE_KEY = 'gym_data_v2';
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return { sessions: [], weights: {} };
+}
+
+function saveData(data) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+let gymData = loadData();
+
+// Exercise registry for weight tracking
+const EXERCISES = {
+  'd0-e0': 'Sentadilla Smith',
+  'd0-e1': 'Prensa 45°',
+  'd0-e2': 'Step-Up Cajón (Mar)',
+  'd0-e3': 'Curl Femoral Acostado',
+  'd0-e4': 'Press Banca',
+  'd0-e5': 'Press Militar',
+  'd0-e6': 'Tríceps Polea (Mar)',
+  'd1-e0': 'Hip Thrust (Jue)',
+  'd1-e1': 'Curl Femoral Sentado',
+  'd1-e2': 'Step-Up Cajón (Jue)',
+  'd1-e3': 'Abductor Máquina',
+  'd1-e4': 'Jalón al Pecho',
+  'd1-e5': 'Remo Máquina (Jue)',
+  'd1-e6': 'Curl Bíceps',
+  'd2-e0': 'Prensa Pesada (Vie)',
+  'd2-e1': 'Hip Thrust Pesado (Vie)',
+  'd2-e2': 'Extensión Drop Set',
+  'd2-e3': 'Búlgara',
+  'd2-e4': 'Elevaciones Laterales',
+  'd2-e5': 'Remo Máquina (Vie)',
+  'd2-e6': 'Tríceps Polea (Vie)',
+};
+
+// ============ WEIGHT LOG UI ============
+function renderWeightLog(exId) {
+  const container = document.getElementById('wl-' + exId);
+  if (!container) return;
+  const history = (gymData.weights[exId] || []).slice(-5);
+
+  let histHTML = '';
+  if (history.length > 0) {
+    histHTML = '<div class="weight-history">';
+    for (let i = history.length - 1; i >= 0; i--) {
+      const entry = history[i];
+      let diffHTML = '';
+      if (i > 0) {
+        const diff = entry.kg - history[i-1].kg;
+        if (diff > 0) diffHTML = `<span class="wh-diff up">+${diff}kg ↑</span>`;
+        else if (diff < 0) diffHTML = `<span class="wh-diff down">${diff}kg ↓</span>`;
+        else diffHTML = `<span class="wh-diff eq">= igual</span>`;
+      }
+      histHTML += `<div class="weight-history-item">
+        <span class="wh-date">${entry.date}</span>
+        <span class="wh-val">${entry.kg} kg</span>
+        ${diffHTML}
+      </div>`;
+    }
+    histHTML += '</div>';
+  }
+
+  container.innerHTML = `
+    <div class="weight-log-title">📦 Peso utilizado</div>
+    <div class="weight-input-row">
+      <input class="weight-input" type="number" id="wi-${exId}" placeholder="ej: 60" step="0.5" min="0">
+      <span class="weight-unit">kg</span>
+      <button class="btn-save-weight" onclick="saveWeight('${exId}')">Guardar</button>
+    </div>
+    ${histHTML}
+  `;
+}
+
+function saveWeight(exId) {
+  const input = document.getElementById('wi-' + exId);
+  const val = parseFloat(input.value);
+  if (isNaN(val) || val <= 0) return;
+  if (!gymData.weights[exId]) gymData.weights[exId] = [];
+  const today = new Date().toLocaleDateString('es-AR', {day:'2-digit',month:'2-digit'});
+  // Update or add today's entry
+  const last = gymData.weights[exId];
+  if (last.length > 0 && last[last.length-1].date === today) {
+    last[last.length-1].kg = val;
+  } else {
+    gymData.weights[exId].push({ date: today, kg: val });
+  }
+  saveData(gymData);
+  input.value = '';
+  renderWeightLog(exId);
+}
+
+// ============ SCREEN NAV ============
+let currentDay = 0;
+let currentScreen = 'day';
+
+function switchScreen(type, dayIdx) {
+  // Update tabs
+  const tabs = document.querySelectorAll('.nav-tab');
+  tabs.forEach((t,i) => {
+    if (type === 'stats') t.classList.toggle('active', i === 3);
+    else t.classList.toggle('active', i === dayIdx);
+  });
+
+  // Show/hide widgets
+  const showWidgets = type === 'day';
+  document.getElementById('timerWidget').style.display = showWidgets ? 'flex' : 'none';
+  document.getElementById('progressWidget').style.display = showWidgets ? 'block' : 'none';
+
+  // Show screens
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  if (type === 'stats') {
+    document.getElementById('screen-stats').classList.add('active');
+    renderStats();
+  } else {
+    document.getElementById('screen-day-' + dayIdx).classList.add('active');
+    currentDay = dayIdx;
+    currentScreen = 'day';
+    updateProgress();
+    // Render all weight logs in this day
+    const panel = document.getElementById('screen-day-' + dayIdx);
+    panel.querySelectorAll('[id^="wl-"]').forEach(el => {
+      renderWeightLog(el.id.replace('wl-', ''));
+    });
+  }
+}
+
+// ============ EXERCISE INTERACTIONS ============
+function toggleDetail(id) {
+  const det = document.getElementById('det-' + id);
+  const btn = document.getElementById('btn-' + id);
+  if (!det) return;
+  const isOpen = det.classList.toggle('open');
+  if (btn) btn.classList.toggle('open', isOpen);
+  if (isOpen) renderWeightLog(id);
+}
+
+function toggleDone(e, id) {
+  e.stopPropagation();
+  document.getElementById(id).classList.toggle('done');
+  updateProgress();
+}
+
+function updateProgress() {
+  const panel = document.getElementById('screen-day-' + currentDay);
+  if (!panel) return;
+  const all = panel.querySelectorAll('.exercise-card');
+  const done = panel.querySelectorAll('.exercise-card.done');
+  const pct = all.length ? (done.length / all.length * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = done.length + ' / ' + all.length;
+}
+
+// ============ TIMER ============
+let timerInterval = null, timerSeconds = 90, timerRunning = false, timerMax = 90;
+function formatTime(s) { return Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60); }
+
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval); timerRunning = false;
+    document.getElementById('timerBtn').textContent = 'START'; return;
+  }
+  timerRunning = true;
+  document.getElementById('timerBtn').textContent = 'STOP';
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    const d = document.getElementById('timerDisplay');
+    d.textContent = formatTime(timerSeconds);
+    d.className = 'timer-display' + (timerSeconds <= 15 ? ' warning' : '');
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval); timerRunning = false;
+      d.textContent = '¡YA!'; d.className = 'timer-display done-t';
+      document.getElementById('timerBtn').textContent = 'START';
+      timerSeconds = timerMax;
+      let f=0; const fl=setInterval(()=>{ document.title=f++%2===0?'⏱ ¡YA!':'Rutina Gym'; if(f>5){clearInterval(fl);document.title='Rutina Gym';} },400);
+    }
+  }, 1000);
+}
+
+function resetTimer() {
+  clearInterval(timerInterval); timerRunning = false; timerSeconds = timerMax;
+  document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
+  document.getElementById('timerDisplay').className = 'timer-display';
+  document.getElementById('timerBtn').textContent = 'START';
+}
+
+// ============ DATE HELPERS (local, sin UTC drift) ============
+function localDateStr(d) {
+  // Returns YYYY-MM-DD in local timezone
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+
+function getWeekStart(date) {
+  const d = new Date(date);
+  // if date is a string "YYYY-MM-DD", parse as local
+  if (typeof date === 'string') {
+    const [y,mo,da] = date.split('-').map(Number);
+    d.setFullYear(y, mo-1, da);
+    d.setHours(0,0,0,0);
+  }
+  const dow = d.getDay(); // 0=Sun
+  const diff = dow === 0 ? -6 : 1 - dow; // shift to Monday
+  d.setDate(d.getDate() + diff);
+  d.setHours(0,0,0,0);
+  return localDateStr(d);
+}
+
+// ============ SESSIONS ============
+function markSessionToday() {
+  const now = new Date();
+  const today = localDateStr(now);
+  const dayNames = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const dayName = dayNames[now.getDay()];
+  const idx = gymData.sessions.findIndex(s => s.date === today);
+  if (idx !== -1) {
+    // Ya marcada → desmarcar directo, sin confirm
+    gymData.sessions.splice(idx, 1);
+  } else {
+    gymData.sessions.push({ date: today, day: dayName });
+  }
+  saveData(gymData);
+  renderStats();
+}
+
+function clearSessions() {
+  if (!confirm('¿Borrar todo el historial de sesiones?')) return;
+  gymData.sessions = [];
+  saveData(gymData);
+  renderStats();
+}
+
+function renderStats() {
+  const today = new Date();
+  const todayStr = localDateStr(today);
+  const thisWeekStart = getWeekStart(localDateStr(today));
+
+  // Button label: toggle if today already marked
+  const todayMarked = gymData.sessions.some(s => s.date === todayStr);
+  const btn = document.getElementById('btnMarkSession');
+  if (btn) {
+    btn.textContent = todayMarked ? '↩ Desmarcar sesión de hoy' : '✓ Marcar sesión de hoy';
+    btn.style.background = todayMarked ? 'var(--orange)' : 'var(--green)';
+  }
+
+  // Sessions this week
+  const thisWeekSessions = gymData.sessions.filter(s => s.date >= thisWeekStart);
+  document.getElementById('stat-sessions').textContent = thisWeekSessions.length;
+  document.getElementById('stat-total').textContent = gymData.sessions.length;
+
+  const goalPct = Math.min(100, Math.round(thisWeekSessions.length / 3 * 100));
+  document.getElementById('stat-goal-pct').textContent = goalPct + '%';
+  document.getElementById('stat-goal-sub').textContent = thisWeekSessions.length + ' de 3 sesiones';
+
+  // Streak
+  let streak = 0;
+  const weeks = new Set(gymData.sessions.map(s => getWeekStart(s.date)));
+  const weeksArr = Array.from(weeks).sort().reverse();
+  const [wy,wmo,wda] = thisWeekStart.split('-').map(Number);
+  let checkWeekDate = new Date(wy, wmo-1, wda);
+  for (let w of weeksArr) {
+    if (w === localDateStr(checkWeekDate)) {
+      streak++;
+      checkWeekDate.setDate(checkWeekDate.getDate() - 7);
+    } else break;
+  }
+  document.getElementById('stat-streak').textContent = streak;
+  document.getElementById('stat-streak-sub').textContent = streak === 1 ? 'semana activa' : 'semanas seguidas';
+
+  // Session history
+  const hist = document.getElementById('sessionHistory');
+  const sorted = [...gymData.sessions].sort((a,b) => b.date.localeCompare(a.date)).slice(0, 12);
+  if (sorted.length === 0) {
+    hist.innerHTML = '<div class="empty-state">Todavía no hay sesiones registradas.</div>';
+  } else {
+    hist.innerHTML = sorted.map(s => `
+      <div class="session-item">
+        <div class="si-left">
+          <div class="si-day">${s.day}</div>
+          <div class="si-date">${s.date}</div>
+        </div>
+        <div class="si-right">
+          <span class="si-badge">✓ Completada</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Weights progress
+  const wpContainer = document.getElementById('weightsProgressContainer');
+  const exWithData = Object.entries(gymData.weights).filter(([k,v]) => v && v.length > 0);
+  if (exWithData.length === 0) {
+    wpContainer.innerHTML = '<div class="empty-state">Guardá pesos en los ejercicios para ver tu progresión aquí.</div>';
+    return;
+  }
+  wpContainer.innerHTML = exWithData.map(([exId, entries]) => {
+    const name = EXERCISES[exId] || exId;
+    const last5 = entries.slice(-5);
+    const maxVal = Math.max(...last5.map(e => e.kg));
+    const first = last5[0].kg, latest = last5[last5.length-1].kg;
+    const totalDiff = latest - first;
+    const diffStr = totalDiff > 0 ? `<b>+${totalDiff}kg desde el inicio</b>` : totalDiff < 0 ? `<b style="color:var(--red)">${totalDiff}kg</b>` : '<b>sin cambio</b>';
+
+    const bars = last5.map((e, i) => {
+      const h = maxVal > 0 ? Math.max(8, Math.round(e.kg / maxVal * 36)) : 8;
+      const isLatest = i === last5.length - 1;
+      return `<div>
+        <div class="ews-bar${isLatest?' latest':''}" style="height:${h}px"></div>
+        <div class="ews-bar-val">${e.kg}</div>
+      </div>`;
+    }).join('');
+
+    return `<div class="ex-weight-summary">
+      <div class="ews-name">${name}</div>
+      <div class="ews-bars">${bars}</div>
+      <div class="ews-meta"><span>Último: <b>${latest}kg</b></span><span>${diffStr}</span></div>
+    </div>`;
+  }).join('');
+}
+
+// ============ INIT ============
+updateProgress();
+document.getElementById('timerWidget').style.display = 'flex';
+document.getElementById('progressWidget').style.display = 'block';
+</script>
+</body>
+</html>
