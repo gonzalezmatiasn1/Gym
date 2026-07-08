@@ -27,7 +27,7 @@
   .nav-tab { flex:1; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:9px 6px; cursor:pointer; transition:all .2s; text-align:center; }
   .nav-tab:hover { border-color:var(--accent); }
   .nav-tab.active { background:var(--accent); border-color:var(--accent); color:#fff; }
-  .nav-tab .tl { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+  .nav-tab .tl { font-size:11px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; }
   .nav-tab .tn { font-size:10px; opacity:.75; margin-top:1px; }
   .nav-tab.active .tn { opacity:.9; }
   .nav-tab.stats-tab .tl { font-size:11px; }
@@ -181,13 +181,13 @@
   </div>
   <div class="nav-tabs">
     <div class="nav-tab active" onclick="switchScreen('day',0)">
-      <div class="tl">MAR</div><div class="tn">Día 1</div>
+      <div class="tl">DÍA 1</div>
     </div>
     <div class="nav-tab" onclick="switchScreen('day',1)">
-      <div class="tl">JUE</div><div class="tn">Día 2</div>
+      <div class="tl">DÍA 2</div>
     </div>
     <div class="nav-tab" onclick="switchScreen('day',2)">
-      <div class="tl">VIE</div><div class="tn">Día 3</div>
+      <div class="tl">DÍA 3</div>
     </div>
     <div class="nav-tab stats-tab" onclick="switchScreen('stats',-1)">
       <div class="tl">📊</div><div class="tn">Stats</div>
@@ -238,7 +238,7 @@
       <div class="ex-header" onclick="toggleDetail('d0-e0')">
         <span class="ex-number">01</span>
         <div class="ex-info">
-          <div class="ex-name">Sentadilla Máquina Smith</div>
+          <div class="ex-name">Sentadilla Hack Squat</div>
           <div class="ex-sets"><b>4×10–12</b> · Descanso 90s</div>
           <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag pierna">Glúteos</span><span class="ex-tag caution">Rango controlado</span></div>
         </div>
@@ -248,8 +248,8 @@
         </div>
       </div>
       <div class="ex-detail" id="det-d0-e0">
-        <div class="detail-tip">Pies ligeramente adelantados. <strong>Bajá solo a 90°</strong> o donde no haya dolor. Empuje desde el talón.</div>
-        <div class="knee-note">No pases las rodillas de la punta de los pies. La Smith te da estabilidad extra que protege el LCA.</div>
+        <div class="detail-tip">Espalda apoyada en el pad, pies al frente de la plataforma. <strong>Bajá solo a 90°</strong> o donde no haya dolor. Empuje desde el talón al subir.</div>
+        <div class="knee-note">La espalda totalmente apoyada descarga la columna. El ángulo de la máquina es más amigable para la rodilla que la sentadilla libre. Controlá que las rodillas no colapsen hacia adentro.</div>
         <div class="weight-log" id="wl-d0-e0"></div>
       </div>
     </div>
@@ -278,7 +278,7 @@
       <div class="ex-header" onclick="toggleDetail('d0-e2')">
         <span class="ex-number">03</span>
         <div class="ex-info">
-          <div class="ex-name">Step-Up en Cajón (mancuernas)</div>
+          <div class="ex-name">Prensa Horizontal a Una Pierna</div>
           <div class="ex-sets"><b>3×10 c/pierna</b> · Descanso 60s</div>
           <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag pierna">Glúteos</span><span class="ex-tag caution">Unilateral</span></div>
         </div>
@@ -288,8 +288,8 @@
         </div>
       </div>
       <div class="ex-detail" id="det-d0-e2">
-        <div class="detail-tip">Subí con el pie completo apoyado en el cajón. <strong>Empujá desde el talón hacia arriba.</strong> Controlá la bajada en 2–3 seg. Sin rebote abajo.</div>
-        <div class="knee-note">Empezá sin peso o muy poco hasta que la rodilla tolere bien. Detecta asimetrías entre piernas. Clave post-LCA.</div>
+        <div class="detail-tip">Un solo pie en el centro de la plataforma. <strong>Bajá hasta 90° de rodilla</strong>, empujá desde el talón. La pierna libre descansada al costado. Controlá que la rodilla no colapse hacia adentro.</div>
+        <div class="knee-note">Ejercicio clave para detectar y corregir asimetrías entre la pierna operada y la sana. Siempre empezá por la pierna operada.</div>
         <div class="weight-log" id="wl-d0-e2"></div>
       </div>
     </div>
@@ -414,9 +414,9 @@
       <div class="ex-header" onclick="toggleDetail('d1-e0')">
         <span class="ex-number">01</span>
         <div class="ex-info">
-          <div class="ex-name">Hip Thrust con Barra</div>
-          <div class="ex-sets"><b>4×12–15</b> · Descanso 90s</div>
-          <div class="ex-tags"><span class="ex-tag pierna">Glúteos</span><span class="ex-tag pierna">Isquios</span></div>
+          <div class="ex-name">Curl Femoral Sentado (máquina)</div>
+          <div class="ex-sets"><b>4×12</b> · Descanso 90s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Isquiotibiales</span></div>
         </div>
         <div class="ex-actions">
           <button class="btn-done" onclick="toggleDone(event,'d1-e0')">✓</button>
@@ -424,8 +424,8 @@
         </div>
       </div>
       <div class="ex-detail" id="det-d1-e0">
-        <div class="detail-tip">Espalda alta en banco, barra con foam en caderas. <strong>Apretá el glúteo 1 seg arriba.</strong> Rodillas a 90° en la cima.</div>
-        <div class="knee-note">Sin stress sobre la rodilla. Glúteos fuertes = estabilidad en giros y frenadas de fútbol.</div>
+        <div class="detail-tip">Variante sentada: ataca el isquio en elongación, diferente al acostado del Día 1. <strong>Pausa en contracción máxima.</strong> Bajada en 3 seg sin rebote.</div>
+        <div class="knee-note">Isquiotibiales fuertes = soporte directo del LCA. Combinar acostado (Día 1) + sentado (Día 2) trabaja el músculo en dos ángulos distintos.</div>
         <div class="weight-log" id="wl-d1-e0"></div>
       </div>
     </div>
@@ -454,7 +454,7 @@
       <div class="ex-header" onclick="toggleDetail('d1-e2')">
         <span class="ex-number">03</span>
         <div class="ex-info">
-          <div class="ex-name">Step-Up en Cajón (mancuernas)</div>
+          <div class="ex-name">Prensa Horizontal a Una Pierna</div>
           <div class="ex-sets"><b>3×10 c/pierna</b> · Descanso 60s</div>
           <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag pierna">Glúteos</span><span class="ex-tag caution">Unilateral</span></div>
         </div>
@@ -464,8 +464,8 @@
         </div>
       </div>
       <div class="ex-detail" id="det-d1-e2">
-        <div class="detail-tip">Segundo paso por semana. <strong>Aumentá el peso progresivamente</strong> respecto al martes si tolerás bien.</div>
-        <div class="knee-note">Seguís trabajando la asimetría entre piernas. Siempre empezar por la pierna operada.</div>
+        <div class="detail-tip">Segundo estímulo unilateral de la semana. <strong>Intentá progresar en peso</strong> respecto al Día 1 si tolerás bien.</div>
+        <div class="knee-note">Siempre empezá por la pierna operada. Controlá que el rendimiento entre ambas piernas se vaya igualando semana a semana.</div>
         <div class="weight-log" id="wl-d1-e2"></div>
       </div>
     </div>
@@ -581,7 +581,7 @@
         <span class="focus-tag core">Funcional</span>
       </div>
     </div>
-    <div class="note"><strong>Calentamiento (8 min):</strong> 5 min remo ergómetro o elíptica → activación glúteos con banda ×15 → sentadilla Smith sin peso ×10.</div>
+    <div class="note"><strong>Calentamiento (8 min):</strong> 5 min remo ergómetro o elíptica → activación glúteos con banda ×15 → sentadilla en Hack Squat sin peso ×10.</div>
 
     <div class="section-label">Fuerza Base</div>
 
@@ -609,9 +609,9 @@
       <div class="ex-header" onclick="toggleDetail('d2-e1')">
         <span class="ex-number">02</span>
         <div class="ex-info">
-          <div class="ex-name">Hip Thrust con Barra — Series Pesadas</div>
+          <div class="ex-name">Curl Femoral Acostado — Series Pesadas</div>
           <div class="ex-sets"><b>4×10</b> · Descanso 90s</div>
-          <div class="ex-tags"><span class="ex-tag pierna">Glúteos</span><span class="ex-tag pierna">Isquios</span></div>
+          <div class="ex-tags"><span class="ex-tag pierna">Isquiotibiales</span><span class="ex-tag caution">Más carga</span></div>
         </div>
         <div class="ex-actions">
           <button class="btn-done" onclick="toggleDone(event,'d2-e1')">✓</button>
@@ -619,7 +619,8 @@
         </div>
       </div>
       <div class="ex-detail" id="det-d2-e1">
-        <div class="detail-tip">Progresá en carga respecto al jueves. <strong>Pausa 2 seg arriba.</strong></div>
+        <div class="detail-tip">Día de fuerza: más peso que el Día 1, menos reps. <strong>Bajada en 4 seg, pausa 1 seg abajo.</strong> Sin rebote.</div>
+        <div class="knee-note">Isquios fuertes = protección directa del LCA. Este es el ejercicio de fuerza base para la rodilla.</div>
         <div class="weight-log" id="wl-d2-e1"></div>
       </div>
     </div>
@@ -648,7 +649,7 @@
       <div class="ex-header" onclick="toggleDetail('d2-e3')">
         <span class="ex-number">04</span>
         <div class="ex-info">
-          <div class="ex-name">Sentadilla Búlgara (mancuernas)</div>
+          <div class="ex-name">Búlgara en Prensa Horizontal</div>
           <div class="ex-sets"><b>3×10 c/pierna</b> · Descanso 90s</div>
           <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag pierna">Glúteos</span><span class="ex-tag caution">Unilateral</span></div>
         </div>
@@ -658,7 +659,7 @@
         </div>
       </div>
       <div class="ex-detail" id="det-d2-e3">
-        <div class="detail-tip">Pie trasero en banco. Bajá hasta muslo paralelo al suelo. <strong>Rodilla delantera no pasa la punta del pie.</strong></div>
+        <div class="detail-tip">Pie trasero apoyado en el asiento de la prensa, pie delantero en la plataforma. <strong>Bajá hasta muslo paralelo, rodilla delantera no pasa la punta del pie.</strong> La prensa te da estructura estable, más seguro que con banco libre.</div>
         <div class="knee-note">Empezá con poco peso. Es el ejercicio más exigente del viernes para la rodilla.</div>
         <div class="weight-log" id="wl-d2-e3"></div>
       </div>
@@ -790,24 +791,24 @@ let gymData = loadData();
 
 // Exercise registry for weight tracking
 const EXERCISES = {
-  'd0-e0': 'Sentadilla Smith',
+  'd0-e0': 'Hack Squat',
   'd0-e1': 'Prensa 45°',
-  'd0-e2': 'Step-Up Cajón (Mar)',
+  'd0-e2': 'Prensa Una Pierna (Día 1)',
   'd0-e3': 'Curl Femoral Acostado',
   'd0-e4': 'Press Banca',
   'd0-e5': 'Press Militar',
   'd0-e6': 'Tríceps Polea (Mar)',
-  'd1-e0': 'Hip Thrust (Jue)',
+  'd1-e0': 'Curl Femoral Sentado (Día 2)',
   'd1-e1': 'Curl Femoral Sentado',
-  'd1-e2': 'Step-Up Cajón (Jue)',
+  'd1-e2': 'Prensa Una Pierna (Día 2)',
   'd1-e3': 'Abductor Máquina',
   'd1-e4': 'Jalón al Pecho',
   'd1-e5': 'Remo Máquina (Jue)',
   'd1-e6': 'Curl Bíceps',
   'd2-e0': 'Prensa Pesada (Vie)',
-  'd2-e1': 'Hip Thrust Pesado (Vie)',
+  'd2-e1': 'Curl Femoral Acostado (Día 3)',
   'd2-e2': 'Extensión Drop Set',
-  'd2-e3': 'Búlgara',
+  'd2-e3': 'Búlgara Prensa Horizontal',
   'd2-e4': 'Elevaciones Laterales',
   'd2-e5': 'Remo Máquina (Vie)',
   'd2-e6': 'Tríceps Polea (Vie)',
