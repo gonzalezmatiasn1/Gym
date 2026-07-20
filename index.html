@@ -167,6 +167,73 @@
   .btn-clear { background:transparent; border:1px solid var(--border); color:var(--muted); border-radius:8px; padding:5px 10px; font-size:11px; cursor:pointer; }
 
   .empty-state { text-align:center; padding:24px; color:var(--muted); font-size:13px; }
+
+  /* ===== DIETA ===== */
+  .diet-day-selector { display:flex; gap:6px; overflow-x:auto; padding-bottom:4px; margin-bottom:14px; scrollbar-width:none; }
+  .diet-day-selector::-webkit-scrollbar { display:none; }
+  .diet-day-btn { flex-shrink:0; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:8px 14px; cursor:pointer; font-size:11px; font-weight:700; color:var(--muted); transition:all .2s; white-space:nowrap; }
+  .diet-day-btn.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .diet-day-btn:hover:not(.active) { border-color:var(--accent); color:var(--text); }
+
+  .diet-context-badge { display:inline-flex; align-items:center; gap:5px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:5px 10px; font-size:11px; color:var(--muted); margin-bottom:14px; }
+  .diet-context-badge.solo { border-color:rgba(79,156,249,.3); color:#93c5fd; background:rgba(79,156,249,.07); }
+  .diet-context-badge.pareja { border-color:rgba(124,58,237,.3); color:#c4b5fd; background:rgba(124,58,237,.07); }
+
+  .meal-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; margin-bottom:10px; overflow:hidden; }
+  .meal-header { padding:14px; display:flex; align-items:flex-start; gap:12px; }
+  .meal-icon { font-size:22px; flex-shrink:0; margin-top:1px; }
+  .meal-info { flex:1; }
+  .meal-type { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:3px; }
+  .meal-name { font-size:15px; font-weight:700; line-height:1.2; }
+  .meal-tags { display:flex; gap:5px; flex-wrap:wrap; margin-top:6px; }
+  .meal-tag { font-size:10px; font-weight:600; padding:2px 8px; border-radius:4px; }
+  .meal-tag.proteina { background:rgba(34,197,94,.12); color:#86efac; border:1px solid rgba(34,197,94,.2); }
+  .meal-tag.veggie { background:rgba(124,58,237,.12); color:#c4b5fd; border:1px solid rgba(124,58,237,.2); }
+  .meal-tag.carbs { background:rgba(245,158,11,.12); color:#fcd34d; border:1px solid rgba(245,158,11,.2); }
+  .meal-tag.rapido { background:rgba(79,156,249,.1); color:#93c5fd; border:1px solid rgba(79,156,249,.2); }
+  .meal-tag.compartido { background:rgba(124,58,237,.1); color:#c4b5fd; border:1px solid rgba(124,58,237,.2); }
+
+  .meal-detail { display:none; border-top:1px solid var(--border); padding:14px; }
+  .meal-detail.open { display:block; }
+  .meal-ingredients { margin-bottom:10px; }
+  .meal-ingredients-title { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+  .ingredient-list { list-style:none; }
+  .ingredient-list li { font-size:12.5px; color:#c9cdd8; padding:3px 0; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:6px; }
+  .ingredient-list li:last-child { border-bottom:none; }
+  .ingredient-list li::before { content:"·"; color:var(--accent); font-weight:700; }
+  .meal-steps { background:var(--surface2); border-radius:10px; padding:10px 12px; }
+  .meal-steps-title { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+  .step-item { font-size:12px; color:#c9cdd8; line-height:1.6; padding:3px 0; display:flex; gap:8px; }
+  .step-num { color:var(--accent); font-weight:700; flex-shrink:0; font-family:'DM Mono',monospace; }
+  .meal-macro { display:flex; gap:8px; margin-top:10px; }
+  .macro-chip { flex:1; background:var(--surface2); border-radius:8px; padding:7px; text-align:center; }
+  .macro-chip .mc-val { font-size:14px; font-weight:700; font-family:'DM Mono',monospace; color:var(--accent); }
+  .macro-chip .mc-label { font-size:10px; color:var(--muted); margin-top:1px; }
+
+  .meal-expand-btn { width:28px; height:28px; border-radius:6px; border:none; background:var(--surface2); color:var(--muted); cursor:pointer; font-size:12px; display:flex; align-items:center; justify-content:center; transition:transform .2s; flex-shrink:0; }
+  .meal-expand-btn.open { transform:rotate(180deg); }
+
+  .diet-note { background:rgba(34,197,94,.07); border:1px solid rgba(34,197,94,.2); border-radius:10px; padding:11px 13px; font-size:12px; color:#86efac; line-height:1.6; margin-bottom:14px; }
+  .diet-note strong { color:#4ade80; }
+
+  /* ===== MEMORY CHAT ===== */
+  .chat-fab { position:fixed; bottom:24px; right:16px; width:48px; height:48px; background:var(--accent); color:#fff; border:none; border-radius:50%; font-size:20px; cursor:pointer; z-index:200; box-shadow:0 4px 16px rgba(79,156,249,.4); display:flex; align-items:center; justify-content:center; }
+  .chat-panel { position:fixed; bottom:82px; right:16px; width:calc(100vw - 32px); max-width:360px; background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:0 8px 32px rgba(0,0,0,.6); z-index:199; display:none; flex-direction:column; overflow:hidden; }
+  .chat-panel.open { display:flex; }
+  .chat-header { padding:11px 14px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+  .chat-header b { font-size:13px; }
+  .chat-header span { font-size:11px; color:var(--muted); }
+  .chat-close { background:none; border:none; color:var(--muted); cursor:pointer; font-size:16px; }
+  .chat-messages { padding:12px; height:220px; overflow-y:auto; display:flex; flex-direction:column; gap:8px; }
+  .chat-msg { font-size:12px; line-height:1.5; padding:8px 10px; border-radius:10px; max-width:92%; }
+  .chat-msg.user { background:var(--accent); color:#fff; align-self:flex-end; border-radius:10px 10px 2px 10px; }
+  .chat-msg.assistant { background:var(--surface2); color:var(--text); align-self:flex-start; border-radius:10px 10px 10px 2px; }
+  .chat-msg.thinking { color:var(--muted); font-style:italic; align-self:flex-start; }
+  .chat-input-row { display:flex; gap:8px; padding:10px 12px; border-top:1px solid var(--border); }
+  .chat-input { flex:1; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:8px 10px; color:var(--text); font-size:12px; font-family:'DM Sans',sans-serif; outline:none; }
+  .chat-input:focus { border-color:var(--accent); }
+  .chat-send { background:var(--accent); color:#fff; border:none; border-radius:8px; padding:8px 12px; font-size:14px; font-weight:700; cursor:pointer; }
+  .chat-send:disabled { opacity:.5; }
 </style>
 </head>
 <body>
@@ -181,7 +248,7 @@
   </div>
   <div class="nav-tabs">
     <div class="nav-tab active" onclick="switchScreen('day',0)">
-      <div class="tl">DÍA 1</div>
+      <div class="tl">DÍA 1</div><div class="tn"> </div>
     </div>
     <div class="nav-tab" onclick="switchScreen('day',1)">
       <div class="tl">DÍA 2</div>
@@ -191,6 +258,9 @@
     </div>
     <div class="nav-tab stats-tab" onclick="switchScreen('stats',-1)">
       <div class="tl">📊</div><div class="tn">Stats</div>
+    </div>
+    <div class="nav-tab" onclick="switchScreen('diet',-1)">
+      <div class="tl">🥗</div><div class="tn">Dieta</div>
     </div>
   </div>
 </div>
@@ -222,7 +292,7 @@
   <!-- ==================== DÍA 1: MARTES ==================== -->
   <div class="screen active" id="screen-day-0">
     <div class="day-header">
-      <h2>Martes — Piernas + Empuje</h2>
+      <h2>Día 1 — Piernas + Empuje</h2>
       <p>Cuádríceps, glúteos y cadena empuje (pecho/hombros/tríceps).</p>
       <div class="day-focus">
         <span class="focus-tag pierna">Piernas</span>
@@ -278,9 +348,9 @@
       <div class="ex-header" onclick="toggleDetail('d0-e2')">
         <span class="ex-number">03</span>
         <div class="ex-info">
-          <div class="ex-name">Prensa Horizontal a Una Pierna</div>
-          <div class="ex-sets"><b>3×10 c/pierna</b> · Descanso 60s</div>
-          <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag pierna">Glúteos</span><span class="ex-tag caution">Unilateral</span></div>
+          <div class="ex-name">Curl Femoral Acostado (máquina)</div>
+          <div class="ex-sets"><b>3×12</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Isquiotibiales</span></div>
         </div>
         <div class="ex-actions">
           <button class="btn-done" onclick="toggleDone(event,'d0-e2')">✓</button>
@@ -288,8 +358,8 @@
         </div>
       </div>
       <div class="ex-detail" id="det-d0-e2">
-        <div class="detail-tip">Un solo pie en el centro de la plataforma. <strong>Bajá hasta 90° de rodilla</strong>, empujá desde el talón. La pierna libre descansada al costado. Controlá que la rodilla no colapse hacia adentro.</div>
-        <div class="knee-note">Ejercicio clave para detectar y corregir asimetrías entre la pierna operada y la sana. Siempre empezá por la pierna operada.</div>
+        <div class="detail-tip"><strong>Contraé al máximo en la subida</strong>, bajá en 3 seg. Sin rebote. Peso moderado, enfocado en la contracción.</div>
+        <div class="knee-note">Isquiotibiales fuertes = soporte principal del LCA. Junto al curl del Día 3 pesado, cubrís el isquio en dos intensidades distintas.</div>
         <div class="weight-log" id="wl-d0-e2"></div>
       </div>
     </div>
@@ -356,7 +426,7 @@
 
     <div class="exercise-card" id="d0-e6">
       <div class="ex-header" onclick="toggleDetail('d0-e6')">
-        <span class="ex-number">07</span>
+        <span class="ex-number">06</span>
         <div class="ex-info">
           <div class="ex-name">Tríceps en Polea (cuerda)</div>
           <div class="ex-sets"><b>3×12–15</b> · Descanso 60s</div>
@@ -398,7 +468,7 @@
   <!-- ==================== DÍA 2: JUEVES ==================== -->
   <div class="screen" id="screen-day-1">
     <div class="day-header">
-      <h2>Jueves — Piernas + Tracción</h2>
+      <h2>Día 2 — Piernas + Tracción</h2>
       <p>Glúteos, isquios y abductores. Espalda y bíceps en tren superior.</p>
       <div class="day-focus">
         <span class="focus-tag pierna">Piernas Post.</span>
@@ -434,9 +504,9 @@
       <div class="ex-header" onclick="toggleDetail('d1-e1')">
         <span class="ex-number">02</span>
         <div class="ex-info">
-          <div class="ex-name">Curl Femoral Sentado (máquina)</div>
-          <div class="ex-sets"><b>4×12</b> · Descanso 60s</div>
-          <div class="ex-tags"><span class="ex-tag pierna">Isquiotibiales</span></div>
+          <div class="ex-name">Abductor en Máquina</div>
+          <div class="ex-sets"><b>3×15</b> · Descanso 45s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Abductores</span><span class="ex-tag caution">Estabilizador</span></div>
         </div>
         <div class="ex-actions">
           <button class="btn-done" onclick="toggleDone(event,'d1-e1')">✓</button>
@@ -444,8 +514,8 @@
         </div>
       </div>
       <div class="ex-detail" id="det-d1-e1">
-        <div class="detail-tip">Variante sentada: isquio en elongación. <strong>Pausa en contracción máxima.</strong> Bajada 3 seg.</div>
-        <div class="knee-note">Combinás acostado (Martes) + sentado (Jueves) → ataca el isquio en dos ángulos distintos.</div>
+        <div class="detail-tip">Empuje hacia afuera lento y controlado. <strong>Vuelta al centro en 3 seg.</strong> Sin rebote.</div>
+        <div class="knee-note">Abductores débiles = rodilla inestable. Muy común post-LCA. Segundo estímulo de la semana para este grupo.</div>
         <div class="weight-log" id="wl-d1-e1"></div>
       </div>
     </div>
@@ -454,9 +524,9 @@
       <div class="ex-header" onclick="toggleDetail('d1-e2')">
         <span class="ex-number">03</span>
         <div class="ex-info">
-          <div class="ex-name">Prensa Horizontal a Una Pierna</div>
-          <div class="ex-sets"><b>3×10 c/pierna</b> · Descanso 60s</div>
-          <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag pierna">Glúteos</span><span class="ex-tag caution">Unilateral</span></div>
+          <div class="ex-name">Camilla de Cuádriceps a Una Pierna</div>
+          <div class="ex-sets"><b>3×12 c/pierna</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag caution">Unilateral</span></div>
         </div>
         <div class="ex-actions">
           <button class="btn-done" onclick="toggleDone(event,'d1-e2')">✓</button>
@@ -464,8 +534,8 @@
         </div>
       </div>
       <div class="ex-detail" id="det-d1-e2">
-        <div class="detail-tip">Segundo estímulo unilateral de la semana. <strong>Intentá progresar en peso</strong> respecto al Día 1 si tolerás bien.</div>
-        <div class="knee-note">Siempre empezá por la pierna operada. Controlá que el rendimiento entre ambas piernas se vaya igualando semana a semana.</div>
+        <div class="detail-tip">Subida controlada, <strong>aguantá 1 segundo arriba haciendo fuerza</strong> y bajá despacio en 3 seg. Siempre empezá por la pierna operada.</div>
+        <div class="knee-note">Aislamiento directo del cuádriceps. Detecta y corrige diferencias entre piernas. Clave para estabilidad de rodilla en el fútbol.</div>
         <div class="weight-log" id="wl-d1-e2"></div>
       </div>
     </div>
@@ -484,8 +554,8 @@
         </div>
       </div>
       <div class="ex-detail" id="det-d1-e3">
-        <div class="detail-tip">Empuje hacia afuera lento. <strong>Vuelta al centro en 3 seg.</strong> Sin rebote.</div>
-        <div class="knee-note">Abductores débiles = rodilla inestable. Muy común post-LCA.</div>
+        <div class="detail-tip">Empuje hacia afuera lento y controlado. <strong>Vuelta al centro en 3 seg.</strong> Sin rebote.</div>
+        <div class="knee-note">Abductores débiles = rodilla inestable. Tercer estímulo semanal para este grupo estabilizador.</div>
         <div class="weight-log" id="wl-d1-e3"></div>
       </div>
     </div>
@@ -534,9 +604,9 @@
       <div class="ex-header" onclick="toggleDetail('d1-e6')">
         <span class="ex-number">07</span>
         <div class="ex-info">
-          <div class="ex-name">Curl de Bíceps con Mancuernas</div>
+          <div class="ex-name">Curl Martillo (mancuernas)</div>
           <div class="ex-sets"><b>3×12</b> · Descanso 60s</div>
-          <div class="ex-tags"><span class="ex-tag upper">Bíceps</span></div>
+          <div class="ex-tags"><span class="ex-tag upper">Bíceps</span><span class="ex-tag upper">Antebrazo</span></div>
         </div>
         <div class="ex-actions">
           <button class="btn-done" onclick="toggleDone(event,'d1-e6')">✓</button>
@@ -544,7 +614,7 @@
         </div>
       </div>
       <div class="ex-detail" id="det-d1-e6">
-        <div class="detail-tip">Codos pegados al cuerpo. <strong>Supina la muñeca en la subida.</strong> Bajada controlada 3 seg.</div>
+        <div class="detail-tip">Agarre neutro (pulgar arriba), codos pegados al cuerpo. <strong>No rotés la muñeca.</strong> Bajada controlada 3 seg. Trabaja el braquial y el braquiorradial además del bíceps.</div>
         <div class="weight-log" id="wl-d1-e6"></div>
       </div>
     </div>
@@ -573,8 +643,8 @@
   <!-- ==================== DÍA 3: VIERNES ==================== -->
   <div class="screen" id="screen-day-2">
     <div class="day-header">
-      <h2>Viernes — Full Body + Fuerza</h2>
-      <p>Más carga en prensa e hip thrust. Drop set en extensora. Hombros y espalda en upper.</p>
+      <h2>Día 3 — Fuerza Base</h2>
+      <p>Prensa pesada, curl femoral pesado y drop set de extensión. Tren superior ligero.</p>
       <div class="day-focus">
         <span class="focus-tag pierna">Fuerza</span>
         <span class="focus-tag upper">Hombros</span>
@@ -645,31 +715,11 @@
       </div>
     </div>
 
-    <div class="exercise-card" id="d2-e3">
-      <div class="ex-header" onclick="toggleDetail('d2-e3')">
-        <span class="ex-number">04</span>
-        <div class="ex-info">
-          <div class="ex-name">Búlgara en Prensa Horizontal</div>
-          <div class="ex-sets"><b>3×10 c/pierna</b> · Descanso 90s</div>
-          <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span><span class="ex-tag pierna">Glúteos</span><span class="ex-tag caution">Unilateral</span></div>
-        </div>
-        <div class="ex-actions">
-          <button class="btn-done" onclick="toggleDone(event,'d2-e3')">✓</button>
-          <button class="btn-expand" id="btn-d2-e3">▾</button>
-        </div>
-      </div>
-      <div class="ex-detail" id="det-d2-e3">
-        <div class="detail-tip">Pie trasero apoyado en el asiento de la prensa, pie delantero en la plataforma. <strong>Bajá hasta muslo paralelo, rodilla delantera no pasa la punta del pie.</strong> La prensa te da estructura estable, más seguro que con banco libre.</div>
-        <div class="knee-note">Empezá con poco peso. Es el ejercicio más exigente del viernes para la rodilla.</div>
-        <div class="weight-log" id="wl-d2-e3"></div>
-      </div>
-    </div>
-
     <div class="section-label">Tren Superior</div>
 
     <div class="exercise-card" id="d2-e4">
       <div class="ex-header" onclick="toggleDetail('d2-e4')">
-        <span class="ex-number">05</span>
+        <span class="ex-number">04</span>
         <div class="ex-info">
           <div class="ex-name">Elevaciones Laterales (mancuernas)</div>
           <div class="ex-sets"><b>4×15</b> · Descanso 60s</div>
@@ -688,7 +738,7 @@
 
     <div class="exercise-card" id="d2-e5">
       <div class="ex-header" onclick="toggleDetail('d2-e5')">
-        <span class="ex-number">06</span>
+        <span class="ex-number">05</span>
         <div class="ex-info">
           <div class="ex-name">Remo en Máquina</div>
           <div class="ex-sets"><b>3×12</b> · Descanso 60s</div>
@@ -707,7 +757,7 @@
 
     <div class="exercise-card" id="d2-e6">
       <div class="ex-header" onclick="toggleDetail('d2-e6')">
-        <span class="ex-number">07</span>
+        <span class="ex-number">06</span>
         <div class="ex-info">
           <div class="ex-name">Tríceps en Polea (cuerda)</div>
           <div class="ex-sets"><b>3×15</b> · Descanso 60s</div>
@@ -768,6 +818,40 @@
       <div id="sessionHistory"></div>
     </div>
   </div>
+
+
+  <!-- ==================== DIETA ==================== -->
+  <div class="screen" id="screen-diet">
+    <div class="diet-note"><strong>Objetivo: recomposición corporal.</strong> Alto en proteína, moderado en carbos, bajo en grasas saturadas. Las cenas son siempre compartidas con tu novia — sin carne ni pollo. Los almuerzos de semana son solo para vos.</div>
+
+    <!-- Day selector -->
+    <div class="diet-day-selector" id="dietDaySelector">
+      <button class="diet-day-btn active" onclick="selectDietDay(0)">Lunes</button>
+      <button class="diet-day-btn" onclick="selectDietDay(1)">Martes</button>
+      <button class="diet-day-btn" onclick="selectDietDay(2)">Miércoles</button>
+      <button class="diet-day-btn" onclick="selectDietDay(3)">Jueves</button>
+      <button class="diet-day-btn" onclick="selectDietDay(4)">Viernes</button>
+      <button class="diet-day-btn" onclick="selectDietDay(5)">Sábado</button>
+      <button class="diet-day-btn" onclick="selectDietDay(6)">Domingo</button>
+    </div>
+
+    <div id="dietContent"></div>
+  </div>
+
+<button class="chat-fab" onclick="toggleChat()">💬</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <div><b>Memoria de pesos</b><br><span>Preguntá tu historial</span></div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg assistant">Hola Matias 💪 Preguntame lo que quieras sobre tu historial de pesos.</div>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chatInput" placeholder="ej: ¿cuánto hice en hack squat?" onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" id="chatSend" onclick="sendChat()">↑</button>
+  </div>
+</div>
 
 </div><!-- /main -->
 
@@ -875,29 +959,29 @@ let currentDay = 0;
 let currentScreen = 'day';
 
 function switchScreen(type, dayIdx) {
-  // Update tabs
   const tabs = document.querySelectorAll('.nav-tab');
   tabs.forEach((t,i) => {
     if (type === 'stats') t.classList.toggle('active', i === 3);
+    else if (type === 'diet') t.classList.toggle('active', i === 4);
     else t.classList.toggle('active', i === dayIdx);
   });
 
-  // Show/hide widgets
   const showWidgets = type === 'day';
   document.getElementById('timerWidget').style.display = showWidgets ? 'flex' : 'none';
   document.getElementById('progressWidget').style.display = showWidgets ? 'block' : 'none';
 
-  // Show screens
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   if (type === 'stats') {
     document.getElementById('screen-stats').classList.add('active');
     renderStats();
+  } else if (type === 'diet') {
+    document.getElementById('screen-diet').classList.add('active');
+    renderDiet();
   } else {
     document.getElementById('screen-day-' + dayIdx).classList.add('active');
     currentDay = dayIdx;
     currentScreen = 'day';
     updateProgress();
-    // Render all weight logs in this day
     const panel = document.getElementById('screen-day-' + dayIdx);
     panel.querySelectorAll('[id^="wl-"]').forEach(el => {
       renderWeightLog(el.id.replace('wl-', ''));
@@ -1098,6 +1182,381 @@ function renderStats() {
       <div class="ews-meta"><span>Último: <b>${latest}kg</b></span><span>${diffStr}</span></div>
     </div>`;
   }).join('');
+}
+
+
+// ============ DIETA ============
+const DIET = [
+  // LUNES
+  {
+    day: 'Lunes',
+    meals: [
+      {
+        type: 'ALMUERZO', icon: '🍗', name: 'Bowl de pollo grillado con arroz integral y verduras',
+        tags: ['proteina','carbs','rapido'], solo: true,
+        ingredients: ['150g pechuga de pollo','1 taza arroz integral cocido','Zapallito o zucchini','Tomate cherry','Aceite de oliva, sal, ajo en polvo, pimentón'],
+        steps: [
+          'Condimentá el pollo con sal, ajo en polvo y pimentón.',
+          'Grillá o cocinalo en sartén con un chorro de aceite, 6-7 min por lado.',
+          'Salteá el zapallito en la misma sartén 3 min.',
+          'Armá el bowl con arroz, pollo en tiras y la verdura.'
+        ],
+        macros: { prot: '45g', carbs: '55g', grasas: '10g' }
+      },
+      {
+        type: 'CENA', icon: '🍝', name: 'Pasta con salsa de paquete, ajo y cebolla',
+        tags: ['veggie','carbs','compartido','rapido'], solo: false,
+        ingredients: ['200g fideos (tallarines o penne)','1 caja/lata salsa de tomate lista','1 cebolla','2 dientes de ajo','Aceite de oliva, sal, albahaca seca','Queso rallado (opcional)'],
+        steps: [
+          'Sofreí cebolla y ajo picados en aceite 5 min a fuego medio.',
+          'Agregá la salsa de paquete, sal y albahaca. Cocinás 5-8 min para que tome el sabor.',
+          'Cocé la pasta al dente por separado.',
+          'Mezclás y servís con queso rallado si querés.'
+        ],
+        macros: { prot: '18g', carbs: '75g', grasas: '10g' }
+      }
+    ]
+  },
+  // MARTES
+  {
+    day: 'Martes',
+    meals: [
+      {
+        type: 'ALMUERZO', icon: '🥗', name: 'Ensalada de atún con huevo duro y verduras',
+        tags: ['proteina','rapido'], solo: true,
+        ingredients: ['1 lata de atún al natural','2 huevos duros','Tomate, pepino, lechuga, choclo','Aceite de oliva, limón, sal'],
+        steps: [
+          'Hervís los huevos 10 min, pelálos y cortálos.',
+          'Mezclás el atún escurrido con las verduras.',
+          'Agregás huevo, aceite, limón y sal.',
+          'Listo en menos de 15 min.'
+        ],
+        macros: { prot: '42g', carbs: '15g', grasas: '14g' }
+      },
+      {
+        type: 'CENA', icon: '🌮', name: 'Tacos de soja texturizada con verduras',
+        tags: ['veggie','proteina','compartido'], solo: false,
+        ingredients: ['1 taza soja texturizada fina','Tortillas de trigo o maíz','Morrón, cebolla, zapallito','Ajo, comino, pimentón, sal','Salsa de tomate, queso rallado (opcional)'],
+        steps: [
+          'Hidratás la soja en agua caliente 10 min, luego escurrís bien.',
+          'Sofreís cebolla, ajo y morrón 5 min. Agregás la soja escurrida.',
+          'Condimentás con comino, pimentón y sal. Cocinás 8 min revolviendo.',
+          'Armás los tacos con la mezcla y queso rallado si querés.'
+        ],
+        macros: { prot: '32g', carbs: '45g', grasas: '10g' }
+      }
+    ]
+  },
+  // MIÉRCOLES
+  {
+    day: 'Miércoles',
+    meals: [
+      {
+        type: 'ALMUERZO', icon: '🍳', name: 'Milanesa de pollo al horno con puré de papa liviano',
+        tags: ['proteina','carbs'], solo: true,
+        ingredients: ['150g pechuga de pollo aplanada','Pan rallado, huevo, sal, ajo en polvo','2 papas medianas','Leche descremada o caldo, sal'],
+        steps: [
+          'Pasás el pollo por huevo batido y pan rallado condimentado.',
+          'Colocás en bandeja con aceite en spray. Horno 200° 20 min, dando vuelta a mitad.',
+          'Cocés las papas, hacés puré con un poco de leche o caldo, sal.'
+        ],
+        macros: { prot: '42g', carbs: '60g', grasas: '9g' }
+      },
+      {
+        type: 'CENA', icon: '🥧', name: 'Tarta de verduras con ensalada fresca',
+        tags: ['veggie','compartido'], solo: false,
+        ingredients: ['1 tapa de tarta comprada','Espinaca o acelga (1 atado)','2 huevos','Queso cremoso o ricota (200g)','Sal, pimienta, nuez moscada','Tomate y lechuga para la ensalada, aceite y limón'],
+        steps: [
+          'Cocinás la verdura en agua o vapor, escurrís muy bien y picás.',
+          'Mezclás verdura, huevos, queso, sal, pimienta y nuez moscada.',
+          'Ponés la tapa en el molde, volcás el relleno.',
+          'Horno 180° 30-35 min hasta que esté firme y dorada arriba.',
+          'Servís con ensalada de tomate y lechuga con aceite y limón.'
+        ],
+        macros: { prot: '24g', carbs: '38g', grasas: '18g' }
+      }
+    ]
+  },
+  // JUEVES
+  {
+    day: 'Jueves',
+    meals: [
+      {
+        type: 'ALMUERZO', icon: '🍚', name: 'Pollo con arroz blanco y verdura salteada',
+        tags: ['proteina','carbs','rapido'], solo: true,
+        ingredients: ['150g pechuga o muslo de pollo','1 taza arroz blanco cocido','Zucchini o brócoli','Ajo, sal, aceite de oliva, pimentón'],
+        steps: [
+          'Condimentás el pollo con ajo, sal y pimentón.',
+          'Cocinás en sartén 6-7 min por lado hasta dorado.',
+          'En la misma sartén salteás la verdura 4 min.',
+          'Servís con arroz blanco.'
+        ],
+        macros: { prot: '44g', carbs: '55g', grasas: '10g' }
+      },
+      {
+        type: 'CENA', icon: '🐟', name: 'Merluza al horno con papas rústicas y ensalada',
+        tags: ['proteina','carbs','compartido'], solo: false,
+        ingredients: ['2 filetes de merluza (o abadejo)','3 papas medianas','Ajo, limón, perejil, aceite de oliva','Tomate y lechuga para ensalada'],
+        steps: [
+          'Cortás las papas en gajos, condimentás con ajo, aceite y sal. Horno 200° 25 min.',
+          'Condimentás los filetes con limón, perejil y sal.',
+          'Últimos 15 min del horno, agregás el pescado junto con las papas.',
+          'Servís con ensalada fresca.'
+        ],
+        macros: { prot: '40g', carbs: '55g', grasas: '10g' }
+      }
+    ]
+  },
+  // VIERNES
+  {
+    day: 'Viernes',
+    meals: [
+      {
+        type: 'ALMUERZO', icon: '🍱', name: 'Bowl de carne picada con arroz y morrones salteados',
+        tags: ['proteina','carbs'], solo: true,
+        ingredients: ['150g carne picada magra','1 taza arroz blanco cocido','1 morrón rojo','Cebolla, ajo, comino, pimentón, sal'],
+        steps: [
+          'Sofreís cebolla y ajo, agregás la carne y desmenuzás bien.',
+          'Condimentás con comino, pimentón y sal. Cocinás 10 min.',
+          'Salteás el morrón en rodajas 5 min por separado.',
+          'Armás el bowl con arroz, carne y morrón.'
+        ],
+        macros: { prot: '44g', carbs: '58g', grasas: '12g' }
+      },
+      {
+        type: 'CENA', icon: '🍽️', name: 'Milanesa de merluza con puré o papas al horno',
+        tags: ['proteina','carbs','compartido'], solo: false,
+        ingredients: ['2 filetes de merluza','Huevo, pan rallado, sal, ajo en polvo, perejil','2 papas medianas (para puré o rústicas)','Leche o caldo si hacés puré','Aceite en spray, limón'],
+        steps: [
+          'Pasás los filetes por huevo batido y pan rallado condimentado.',
+          'Airfryer 200° 12 min dando vuelta a mitad, o horno 200° 20 min.',
+          'Para puré: cocés las papas y hacés puré con leche, sal y manteca.',
+          'Para papas al horno: gajos con aceite y sal, 200° 25-30 min.',
+          'Servís con limón exprimido arriba de la milanesa.'
+        ],
+        macros: { prot: '42g', carbs: '52g', grasas: '12g' }
+      }
+    ]
+  },
+  // SÁBADO
+  {
+    day: 'Sábado',
+    meals: [
+      {
+        type: 'ALMUERZO', icon: '🍳', name: 'Omelette de espinaca, queso y tomate',
+        tags: ['proteina','veggie','rapido','compartido'], solo: false,
+        ingredients: ['4 huevos (2 por persona)','Espinaca fresca o congelada','Queso cremoso o mozzarella','Tomate, sal, pimienta, aceite'],
+        steps: [
+          'Batís los huevos con sal y pimienta.',
+          'Salteás la espinaca 2 min en una sartén con aceite.',
+          'Vertís los huevos sobre la espinaca a fuego medio-bajo.',
+          'Cuando casi cuaja, ponés queso y tomate en el centro y doblás.'
+        ],
+        macros: { prot: '28g', carbs: '6g', grasas: '20g' }
+      },
+      {
+        type: 'CENA', icon: '🫕', name: 'Cazuela de verduras con huevo',
+        tags: ['veggie','compartido'], solo: false,
+        ingredients: ['Zapallo, zanahoria, papa, zapallito en cubos','1 cebolla, 2 dientes de ajo','Caldo de verduras','Cúrcuma, comino, sal, pimienta','2 huevos (uno por persona)','Pan tostado para acompañar (opcional)'],
+        steps: [
+          'Sofreís cebolla y ajo en aceite 5 min.',
+          'Agregás las verduras más duras (zanahoria, papa) y cocinás 5 min.',
+          'Sumás caldo hasta cubrir y cocinás 15 min tapado.',
+          'Agregás zapallo y zapallito, 10 min más.',
+          'Rompés los huevos sobre la cazuela, tapás y cocinás 4-5 min hasta que cuajen.'
+        ],
+        macros: { prot: '18g', carbs: '45g', grasas: '12g' }
+      }
+    ]
+  },
+  // DOMINGO
+  {
+    day: 'Domingo',
+    meals: [
+      {
+        type: 'ALMUERZO', icon: '🥘', name: 'Cazuela de verduras con huevo',
+        tags: ['veggie','compartido'], solo: false,
+        ingredients: ['Zapallo, zanahoria, papa, zapallito en cubos','1 cebolla, 2 dientes de ajo','Caldo de verduras','Cúrcuma, comino, sal, pimienta','2 huevos (uno por persona)'],
+        steps: [
+          'Sofreís cebolla y ajo en aceite 5 min.',
+          'Agregás las verduras más duras (zanahoria, papa) y cocinás 5 min.',
+          'Sumás caldo hasta cubrir y cocinás 15 min tapado.',
+          'Agregás zapallo y zapallito, 10 min más.',
+          'Rompés los huevos sobre la cazuela, tapás y cocinás 4-5 min hasta que cuajen.'
+        ],
+        macros: { prot: '18g', carbs: '45g', grasas: '12g' }
+      },
+      {
+        type: 'CENA', icon: '🍝', name: 'Fideos con manteca y queso',
+        tags: ['veggie','carbs','compartido','rapido'], solo: false,
+        ingredients: ['200g fideos (tallarines o spaghetti)','50g manteca','Queso parmesano o reggianito rallado generoso','Sal, pimienta negra','Perejil fresco (opcional)'],
+        steps: [
+          'Cocés los fideos al dente, reservás una taza del agua de cocción.',
+          'En la misma olla apagada, ponés la manteca y dejás que se derrita con el calor.',
+          'Agregás los fideos, queso rallado y un chorrito del agua de cocción.',
+          'Mezclás bien hasta que quede cremoso. Pimienta negra generosa y perejil si tenés.'
+        ],
+        macros: { prot: '18g', carbs: '72g', grasas: '20g' }
+      }
+    ]
+  }
+];
+
+let currentDietDay = 0;
+
+function selectDietDay(idx) {
+  currentDietDay = idx;
+  document.querySelectorAll('.diet-day-btn').forEach((b,i) => b.classList.toggle('active', i === idx));
+  renderDietDay();
+}
+
+function renderDiet() {
+  // Set current day automatically
+  const todayIdx = [1,2,3,4,5,6,0][new Date().getDay()]; // Mon=0
+  selectDietDay(todayIdx);
+}
+
+function renderDietDay() {
+  const day = DIET[currentDietDay];
+  const container = document.getElementById('dietContent');
+  let html = '';
+
+  day.meals.forEach((meal, mi) => {
+    const id = `meal-${currentDietDay}-${mi}`;
+    const contextClass = meal.solo ? 'solo' : 'pareja';
+    const contextText = meal.solo ? '👤 Solo vos' : '👫 Con tu novia';
+    const tagsHTML = meal.tags.map(t => `<span class="meal-tag ${t}">${t === 'proteina' ? 'Proteína' : t === 'veggie' ? 'Veggie ✓' : t === 'carbs' ? 'Carbos' : t === 'rapido' ? 'Rápido' : 'Compartido'}</span>`).join('');
+    const stepsHTML = meal.steps.map((s,i) => `<div class="step-item"><span class="step-num">${i+1}.</span><span>${s}</span></div>`).join('');
+    const ingHTML = meal.ingredients.map(ing => `<li>${ing}</li>`).join('');
+
+    html += `
+    <div class="diet-context-badge ${contextClass}">${contextText}</div>
+    <div class="meal-card">
+      <div class="meal-header" onclick="toggleMeal('${id}')">
+        <div class="meal-icon">${meal.icon}</div>
+        <div class="meal-info">
+          <div class="meal-type">${meal.type}</div>
+          <div class="meal-name">${meal.name}</div>
+          <div class="meal-tags">${tagsHTML}</div>
+        </div>
+        <button class="meal-expand-btn" id="mbtn-${id}">▾</button>
+      </div>
+      <div class="meal-detail" id="det-${id}">
+        <div class="meal-ingredients">
+          <div class="meal-ingredients-title">🛒 Ingredientes</div>
+          <ul class="ingredient-list">${ingHTML}</ul>
+        </div>
+        <div class="meal-steps">
+          <div class="meal-steps-title">👨‍🍳 Preparación</div>
+          ${stepsHTML}
+        </div>
+        <div class="meal-macro">
+          <div class="macro-chip"><div class="mc-val">${meal.macros.prot}</div><div class="mc-label">Proteína</div></div>
+          <div class="macro-chip"><div class="mc-val">${meal.macros.carbs}</div><div class="mc-label">Carbos</div></div>
+          <div class="macro-chip"><div class="mc-val">${meal.macros.grasas}</div><div class="mc-label">Grasas</div></div>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function toggleMeal(id) {
+  const det = document.getElementById('det-' + id);
+  const btn = document.getElementById('mbtn-' + id);
+  if (!det) return;
+  const open = det.classList.toggle('open');
+  if (btn) btn.classList.toggle('open', open);
+}
+
+
+// ============ MEMORY CHAT ============
+function toggleChat() {
+  const p = document.getElementById('chatPanel');
+  p.classList.toggle('open');
+  if (p.classList.contains('open')) document.getElementById('chatInput').focus();
+}
+
+function buildWeightContext() {
+  const EXNAMES = {
+    'd0-e0':'Hack Squat','d0-e1':'Prensa 45°','d0-e2':'Curl Femoral Acostado (Día 1)',
+    'd0-e3':'Curl Femoral Acostado','d0-e4':'Press Banca','d0-e5':'Press Militar',
+    'd0-e6':'Tríceps Polea','d1-e0':'Curl Femoral Sentado','d1-e1':'Abductor Máquina',
+    'd1-e2':'Camilla Cuádriceps Una Pierna','d1-e3':'Abductor Máquina (Día 2)',
+    'd1-e4':'Jalón al Pecho','d1-e5':'Remo Máquina (Día 2)',
+    'd1-e6':'Curl Martillo','d1-e7':'Core',
+    'd2-e0':'Prensa Pesada','d2-e1':'Curl Femoral Acostado Pesado','d2-e2':'Extensión Drop Set',
+    'd2-e4':'Elevaciones Laterales','d2-e5':'Remo Máquina (Día 3)',
+    'd2-e6':'Tríceps Polea (Día 3)'
+  };
+  const lines = [];
+  for (const [exId, entries] of Object.entries(gymData.weights || {})) {
+    if (!entries || entries.length === 0) continue;
+    const name = EXNAMES[exId] || exId;
+    const last = entries[entries.length-1];
+    const prev = entries.length > 1 ? entries[entries.length-2] : null;
+    let line = `- ${name}: último ${last.kg}kg (${last.date})`;
+    if (prev) line += `, anterior ${prev.kg}kg (${prev.date})`;
+    const first = entries[0];
+    const diff = last.kg - first.kg;
+    if (diff !== 0) line += `. Total: ${diff>0?'+':''}${diff}kg desde ${first.date}`;
+    lines.push(line);
+  }
+  return lines.length > 0 ? lines.join('\n') : 'No hay pesos registrados todavía.';
+}
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('chatSend');
+  const messages = document.getElementById('chatMessages');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const userDiv = document.createElement('div');
+  userDiv.className = 'chat-msg user';
+  userDiv.textContent = text;
+  messages.appendChild(userDiv);
+  input.value = '';
+  sendBtn.disabled = true;
+
+  const thinkDiv = document.createElement('div');
+  thinkDiv.className = 'chat-msg thinking';
+  thinkDiv.textContent = 'consultando historial...';
+  messages.appendChild(thinkDiv);
+  messages.scrollTop = messages.scrollHeight;
+
+  const ctx = buildWeightContext();
+  const sessions = (gymData.sessions || []).length;
+  const system = `Sos el asistente de entrenamiento de Matias, que entrena 3 días por semana (Día 1, 2 y 3) y está en recuperación de LCA y LCM operados.
+
+HISTORIAL DE PESOS:
+${ctx}
+
+SESIONES TOTALES REGISTRADAS: ${sessions}
+
+Respondé muy corto y directo (1-3 líneas). Tuteo informal. Si no hay datos de algo, decilo claramente. No inventes números.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        system,
+        messages: [{ role: 'user', content: text }]
+      })
+    });
+    const data = await res.json();
+    thinkDiv.className = 'chat-msg assistant';
+    thinkDiv.textContent = data.content?.[0]?.text || 'Sin respuesta.';
+  } catch(e) {
+    thinkDiv.className = 'chat-msg assistant';
+    thinkDiv.textContent = 'Error de conexión.';
+  }
+  sendBtn.disabled = false;
+  messages.scrollTop = messages.scrollHeight;
 }
 
 // ============ INIT ============
