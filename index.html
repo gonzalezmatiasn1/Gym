@@ -368,9 +368,9 @@
       <div class="ex-header" onclick="toggleDetail('d0-e3')">
         <span class="ex-number">04</span>
         <div class="ex-info">
-          <div class="ex-name">Curl Femoral Acostado (máquina)</div>
-          <div class="ex-sets"><b>3×12</b> · Descanso 60s</div>
-          <div class="ex-tags"><span class="ex-tag pierna">Isquiotibiales</span></div>
+          <div class="ex-name">Extensión de Cuádriceps (máquina)</div>
+          <div class="ex-sets"><b>3×15</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag pierna">Cuádríceps</span></div>
         </div>
         <div class="ex-actions">
           <button class="btn-done" onclick="toggleDone(event,'d0-e3')">✓</button>
@@ -378,8 +378,8 @@
         </div>
       </div>
       <div class="ex-detail" id="det-d0-e3">
-        <div class="detail-tip"><strong>Contraé al máximo en la subida</strong>, bajá en 3 seg. Sin rebote.</div>
-        <div class="knee-note">Isquiotibiales fuertes = soporte principal del LCA. Prioridad alta.</div>
+        <div class="detail-tip">Peso moderado, enfocate en la contracción arriba. <strong>Pausa 1 segundo en extensión completa.</strong> Bajada controlada 3 seg.</div>
+        <div class="knee-note">Fortalece el cuádriceps directamente, lo que reduce la carga sobre el LCA durante el fútbol.</div>
         <div class="weight-log" id="wl-d0-e3"></div>
       </div>
     </div>
@@ -540,13 +540,15 @@
       </div>
     </div>
 
+    <div class="section-label">Tren Superior — Tracción</div>
+
     <div class="exercise-card" id="d1-e3">
       <div class="ex-header" onclick="toggleDetail('d1-e3')">
         <span class="ex-number">04</span>
         <div class="ex-info">
-          <div class="ex-name">Abductor en Máquina</div>
-          <div class="ex-sets"><b>3×15</b> · Descanso 45s</div>
-          <div class="ex-tags"><span class="ex-tag pierna">Abductores</span><span class="ex-tag caution">Estabilizador</span></div>
+          <div class="ex-name">Curl de Bíceps Alternado (mancuernas)</div>
+          <div class="ex-sets"><b>3×12 c/brazo</b> · Descanso 60s</div>
+          <div class="ex-tags"><span class="ex-tag upper">Bíceps</span></div>
         </div>
         <div class="ex-actions">
           <button class="btn-done" onclick="toggleDone(event,'d1-e3')">✓</button>
@@ -554,13 +556,10 @@
         </div>
       </div>
       <div class="ex-detail" id="det-d1-e3">
-        <div class="detail-tip">Empuje hacia afuera lento y controlado. <strong>Vuelta al centro en 3 seg.</strong> Sin rebote.</div>
-        <div class="knee-note">Abductores débiles = rodilla inestable. Tercer estímulo semanal para este grupo estabilizador.</div>
+        <div class="detail-tip">Codos pegados al cuerpo. <strong>Supina la muñeca en la subida.</strong> Bajada controlada 3 seg. Alternás brazo por brazo.</div>
         <div class="weight-log" id="wl-d1-e3"></div>
       </div>
     </div>
-
-    <div class="section-label">Tren Superior — Tracción</div>
 
     <div class="exercise-card" id="d1-e4">
       <div class="ex-header" onclick="toggleDetail('d1-e4')">
@@ -1481,9 +1480,9 @@ function toggleChat() {
 function buildWeightContext() {
   const EXNAMES = {
     'd0-e0':'Hack Squat','d0-e1':'Prensa 45°','d0-e2':'Curl Femoral Acostado (Día 1)',
-    'd0-e3':'Curl Femoral Acostado','d0-e4':'Press Banca','d0-e5':'Press Militar',
+    'd0-e3':'Extensión Cuádriceps (Día 1)','d0-e4':'Press Banca','d0-e5':'Press Militar',
     'd0-e6':'Tríceps Polea','d1-e0':'Curl Femoral Sentado','d1-e1':'Abductor Máquina',
-    'd1-e2':'Camilla Cuádriceps Una Pierna','d1-e3':'Abductor Máquina (Día 2)',
+    'd1-e2':'Camilla Cuádriceps Una Pierna','d1-e3':'Curl Bíceps Alternado',
     'd1-e4':'Jalón al Pecho','d1-e5':'Remo Máquina (Día 2)',
     'd1-e6':'Curl Martillo','d1-e7':'Core',
     'd2-e0':'Prensa Pesada','d2-e1':'Curl Femoral Acostado Pesado','d2-e2':'Extensión Drop Set',
